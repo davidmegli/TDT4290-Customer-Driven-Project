@@ -4,7 +4,12 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Anchor
+  - CinemachineTarget
+  - Hidden_Area_1
+  - Hidden_Area_2
+  - Hidden_Area_3
+  - Cube_Spawn_Point_1
+  - Cube_Spawn_Point_2
   layers:
   - Default
   - TransparentFX
