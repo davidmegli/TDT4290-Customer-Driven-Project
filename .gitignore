@@ -51,5 +51,7 @@ sysinfo.txt
 ehthumbs.db
 Thumbs.db
 
+node_modules/
+
 # Package manager cache
 [Pp]ackages/packages-lock.json

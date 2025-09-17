@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 191492db6e452eb468b95433ec162164, type: 3}
   m_Name: InteractionLayerSettings
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.InteractionLayerSettings
   m_LayerNames:
   - Default
   - 
@@ -44,4 +44,4 @@ MonoBehaviour:
   - 
   - 
   - 
-  - Teleport
+  - 
