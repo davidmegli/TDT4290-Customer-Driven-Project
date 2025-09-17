@@ -10,6 +10,7 @@ TagManager:
   - Hidden_Area_3
   - Cube_Spawn_Point_1
   - Cube_Spawn_Point_2
+  - PlayerHand
   layers:
   - Default
   - TransparentFX
