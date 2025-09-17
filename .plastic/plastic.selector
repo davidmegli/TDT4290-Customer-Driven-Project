@@ -1,4 +1,0 @@
-repository "vr_project_1/vr_project_1@20066289308860@cloud"
-  path "/"
-    br "/main"
-    co "/main"
