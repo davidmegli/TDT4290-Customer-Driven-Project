@@ -1,16 +1,24 @@
-public class PlayerMovement : Monobehavior
+using UnityEngine;
+[RequireComponent(typeof(CharacterController))]
+
+public class PlayerMovement : MonoBehaviour
 {
     public float speed = 5f;
     public float gravity = -9.81f;
-    public float jumpHeight = 1f;
+    // public float jumpHeight = 1f;
 
     private CharacterController controller;
     private Vector3 velocity;
 
-    void Start()
+    void Awake (){
+        controller = GetComponent<CharacterController>();
+    
+    }
+
+    /** void Start()
     {
         controller = GetComponent<CharacterController>();
-    }
+    }*/
 
     void Update()
     {
@@ -20,13 +28,14 @@ public class PlayerMovement : Monobehavior
         Vector3 move = transform.right * x + transform.forward * z;
         controller.Move(move * speed * Time.deltaTime);
 
-        if (controller.isGrounded && velocity.y < 0)
-            velocity.y = -2f;
+        if (controller.isGrounded && velocity.y < 0) velocity.y = -2f;
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
 
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+        // REMOVE? velocity.y += gravity * Time.deltaTime;
+        // REMOVE?controller.Move(velocity * Time.deltaTime);
 
-        if (Input.GetButtonDown("Jump") && controller.isGrounded)
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        //if (Input.GetButtonDown("Jump") && controller.isGrounded)
+          //  velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
     }
 }
