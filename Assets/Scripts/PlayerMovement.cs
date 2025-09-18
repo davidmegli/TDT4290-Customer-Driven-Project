@@ -31,11 +31,5 @@ public class PlayerMovement : MonoBehaviour
         if (controller.isGrounded && velocity.y < 0) velocity.y = -2f;
             velocity.y += gravity * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
-
-        // REMOVE? velocity.y += gravity * Time.deltaTime;
-        // REMOVE?controller.Move(velocity * Time.deltaTime);
-
-        //if (Input.GetButtonDown("Jump") && controller.isGrounded)
-          //  velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-    }
+}
 }
