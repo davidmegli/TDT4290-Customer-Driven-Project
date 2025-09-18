@@ -15,10 +15,10 @@ public class PlayerMovement : MonoBehaviour
     
     }
 
-    /** void Start()
+    void Start()
     {
-        controller = GetComponent<CharacterController>();
-    }*/
+        transform.position = new Vector3(0f, 1, 0f);
+    }
 
     void Update()
     {
