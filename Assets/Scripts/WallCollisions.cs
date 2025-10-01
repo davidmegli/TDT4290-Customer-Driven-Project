@@ -15,6 +15,9 @@ public class WallCollisions : MonoBehaviour
         }
 
         audioSource.playOnAwake = false;
+    
+
+        DontDestroyOnLoad(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
