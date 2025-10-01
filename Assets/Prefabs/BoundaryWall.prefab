@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b61522c5beba0343a790a987971d3e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WallCollisions
-  collisionSound: {fileID: 0}
+  collisionSound: {fileID: 8300000, guid: 9d5753a1c2eaeef4780101fde1dfb09d, type: 3}
 --- !u!1 &3017179433666877817
 GameObject:
   m_ObjectHideFlags: 0
