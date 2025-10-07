@@ -122,7 +122,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2979861227020849164}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b61522c5beba0343a790a987971d3e9, type: 3}
   m_Name: 
@@ -373,7 +373,7 @@ AudioSource:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.6450043
+      time: 0.39582825
       value: 0
       inSlope: 0.005163496
       outSlope: 0.005163496
