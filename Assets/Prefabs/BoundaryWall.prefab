@@ -199,13 +199,13 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 6b44f839f762a6f42a1f71652984bb58, type: 3}
+  m_Resource: {fileID: 8300000, guid: 7fff8c0520731ec42950e85670f3b610, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.3
+  m_Volume: 0.84
   m_Pitch: 1
   Loop: 1
   Mute: 0
-  Spatialize: 0
+  Spatialize: 1
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 0
@@ -229,7 +229,7 @@ AudioSource:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.33683205
+      time: 0.29714394
       value: 0
       inSlope: -1.002004
       outSlope: -1.002004
@@ -345,11 +345,11 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 38907871a71ebb042a763a1b776652ff, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.3
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
-  Spatialize: 0
+  Spatialize: 1
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 0
@@ -373,13 +373,13 @@ AudioSource:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.7993622
+      time: 0.6450043
       value: 0
-      inSlope: -1.002004
-      outSlope: -1.002004
+      inSlope: 0.005163496
+      outSlope: 0.005163496
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.6344995
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
