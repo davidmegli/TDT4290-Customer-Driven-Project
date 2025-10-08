@@ -4,25 +4,22 @@ using UnityEngine;
 public class WallProximityWarning : MonoBehaviour
 {
     [Header("Audio")]
-    public AudioClip warningBeep;
+    public AudioClip warningClip;   // Legg inn voice her
     private AudioSource audioSource;
 
     [Header("Behaviour")]
-    [Tooltip("Sekunder mellom hvert varsel mens spilleren er i nærheten.")]
     public float warningCooldown = 0.7f;
-
-    [Tooltip("Hvilke tags som utløser advarsel (f.eks. spillerhender/kropp).")]
     public string[] triggeringTags = { "PlayerHand", "Player" };
 
     private float _nextBeepTime = 0f;
-    private int _insideCount = 0; // hvor mange spiller-collidere som er inne i sonen
+    private int _insideCount = 0;
 
     void Awake()
     {
         var col = GetComponent<Collider>();
         if (!col.isTrigger)
         {
-            Debug.LogWarning("[WallProximityWarning] Collider må ha IsTrigger = true.");
+            Debug.LogWarning("[WallProximityWarning] Collider må være IsTrigger = true. Retter det.");
             col.isTrigger = true;
         }
 
@@ -37,56 +34,49 @@ public class WallProximityWarning : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!IsPlayerTag(other)) return;
-
         _insideCount++;
-        TryBeep(); // gi umiddelbar første pip når man går inn i sonen
+        Debug.Log($"[Proximity] ENTER: {other.name} (count={_insideCount})");
+        TryWarn();
     }
 
     private void OnTriggerStay(Collider other)
     {
         if (!IsPlayerTag(other)) return;
-
-        TryBeep(); // repeter med cooldown så lenge man er i nærheten
+        TryWarn();
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (!IsPlayerTag(other)) return;
-
         _insideCount = Mathf.Max(0, _insideCount - 1);
-        if (_insideCount == 0)
-        {
-            // Reset gjerne så det piper raskt neste gang man kommer tilbake
-            _nextBeepTime = 0f;
-        }
+        Debug.Log($"[Proximity] EXIT: {other.name} (count={_insideCount})");
+        if (_insideCount == 0) _nextBeepTime = 0f;
     }
 
     private bool IsPlayerTag(Collider other)
     {
         for (int i = 0; i < triggeringTags.Length; i++)
-        {
             if (other.CompareTag(triggeringTags[i])) return true;
-        }
         return false;
     }
 
-    private void TryBeep()
+    private void TryWarn()
     {
         if (Time.time < _nextBeepTime) return;
 
-        if (warningBeep != null)
+        if (warningClip != null)
         {
-            audioSource.PlayOneShot(warningBeep);
+            audioSource.PlayOneShot(warningClip);
             _nextBeepTime = Time.time + warningCooldown;
+            Debug.Log("[Proximity] WARNING voice played");
         }
         else
         {
-            Debug.LogWarning("[WallProximityWarning] Ingen warningBeep satt i Inspector!");
+            Debug.LogWarning("[Proximity] Ingen warningClip satt!");
         }
     }
 
 #if UNITY_EDITOR
-    // Hjelper deg å “se” sonen i editor
     private void OnDrawGizmosSelected()
     {
         var col = GetComponent<Collider>();
