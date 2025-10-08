@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class WallCollisions : MonoBehaviour
+public class WallCollisionsNew : MonoBehaviour
 {
     [Header("Audio")]
     public AudioClip collisionSound; // Game Over-lyd
