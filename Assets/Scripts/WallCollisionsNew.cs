@@ -8,7 +8,7 @@ public class WallCollisionsNew : MonoBehaviour
     private AudioSource audioSource;
 
     [Header("Filter")]
-    public string[] triggeringTags = { "PlayerHand", "Player" };
+    public string[] triggeringTags = { "PlayerHand", "Player", "PlayerHead"};
 
     [Header("Contact Settings")]
     [Tooltip("Game over utløses først når hånda er dette nære (meter). 0.02 = 2 cm.")]
