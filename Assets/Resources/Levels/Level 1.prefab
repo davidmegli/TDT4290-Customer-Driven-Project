@@ -48,6 +48,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4121349567324343757, guid: 9116bbdab683c5141a86f9ceeaba66c4, type: 3}
+      propertyPath: triggersLevelCompletion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8605686198821252737, guid: 9116bbdab683c5141a86f9ceeaba66c4, type: 3}
       propertyPath: m_LocalScale.y
       value: 0.5

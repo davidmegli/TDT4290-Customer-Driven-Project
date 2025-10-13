@@ -38,6 +38,8 @@ public class LevelManager : MonoBehaviour
 
         // Load the first level at startup
         LoadLevel(0);
+
+        elevator.gameObject.SetActive(false);
     }
 
     private void OnDestroy()
@@ -89,6 +91,7 @@ public class LevelManager : MonoBehaviour
         if (currentLevelInstance != null)
         {
             Destroy(currentLevelInstance);
+            Debug.Log("level destroyed");
         }
         
         elevator.gameObject.SetActive(true);
