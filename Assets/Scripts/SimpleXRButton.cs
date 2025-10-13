@@ -4,6 +4,7 @@ public class SimpleXRButton : MonoBehaviour
 {
     public Color defaultColor = Color.green;
     public Color pressedColor = Color.red;
+    public bool triggersLevelCompletion = false;
 
     private Renderer rend;
 
@@ -20,6 +21,10 @@ public class SimpleXRButton : MonoBehaviour
         {
             rend.material.color = pressedColor;
             Debug.Log("Button touched by: " + other.gameObject.name);
+            if (triggersLevelCompletion)
+            {
+                LevelManager.LevelCompleted();
+            }
         }
     }
 
