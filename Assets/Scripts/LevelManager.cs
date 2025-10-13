@@ -9,6 +9,8 @@ public class LevelManager : MonoBehaviour
     // Global event that can be triggered by any level when completed
     public static event Action OnLevelCompleted;
 
+    [SerializeField] private Elevator elevator;
+
     private List<GameObject> levels = new List<GameObject>();
     private GameObject currentLevelInstance;
     private int currentLevelIndex = 0;
@@ -84,8 +86,18 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void LoadNextLevel()
     {
-        int nextIndex = currentLevelIndex + 1;
-        LoadLevel(nextIndex);
+        if (currentLevelInstance != null)
+        {
+            Destroy(currentLevelInstance);
+        }
+        
+        elevator.gameObject.SetActive(true);
+    }
+
+    public static void StartNextLevel()
+    {
+        int nextIndex = Instance.currentLevelIndex + 1;
+        Instance.LoadLevel(nextIndex);
     }
 
     /// <summary>
