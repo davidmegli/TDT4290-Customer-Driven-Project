@@ -1,0 +1,2 @@
+C:\Users\BreachUser\TDT4290-Customer-Driven-Project\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\CMakeLists.txt
+C:\Users\BreachUser\TDT4290-Customer-Driven-Project\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt

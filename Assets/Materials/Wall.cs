@@ -7,13 +7,21 @@ public class wall : MonoBehaviour
     public Vector3 pointB;
     public float speed = 0.1f;
 
+    [Header("Pause Settings")]
+    [Tooltip("How long the wall should pause at each endpoint before reversing (seconds).")]
+    public float endStopDuration = 0f;
+
+    [Header("Scraping Sound Settings")]
+    [Tooltip("Assign both scraping AudioSources (e.g., floor and ceiling).")]
+    public AudioSource[] scrapingAudioSources;
+
     [Header("Explosion Settings")]
     public GameObject explosionPrefab;
     public AudioClip explosionSound;
     public float explosionVolume = 1f;
 
     [Header("Collision Settings")]
-    [Tooltip("Distance à la surface du mur pour déclencher l'explosion")]
+    [Tooltip("Distance to the wall surface that triggers the explosion")]
     public float surfaceDetectionDistance = 0.1f;
 
     [HideInInspector] public Vector3 target;
@@ -23,20 +31,35 @@ public class wall : MonoBehaviour
     private Camera playerCamera;
     private Collider wallCollider;
 
+    // Pause state
+    private bool isPausing = false;
+    private float pauseRemaining = 0f;
+    private const float targetReachThreshold = 0.1f;
+
     void Start()
     {
-        // Initialisation du mouvement
+        // Initialize movement
         transform.position = pointA;
         target = pointB;
 
-        // Trouver la caméra
+        // Find the camera
         playerCamera = Camera.main;
         if (playerCamera == null)
             playerCamera = FindFirstObjectByType<Camera>();
 
-        // Setup des composants
+        // Setup components
         SetupAudioSource();
         SetupCollider();
+
+        // Ensure all scraping sounds start playing and loop
+        foreach (var src in scrapingAudioSources)
+        {
+            if (src != null)
+            {
+                src.loop = true;
+                if (!src.isPlaying) src.Play();
+            }
+        }
     }
 
     void SetupAudioSource()
@@ -56,11 +79,11 @@ public class wall : MonoBehaviour
         wallCollider = GetComponent<Collider>();
         if (wallCollider == null)
         {
-            // Ajouter un BoxCollider par défaut si aucun collider n'existe
+            // Add a default BoxCollider if none exists
             wallCollider = gameObject.AddComponent<BoxCollider>();
         }
 
-        // Le collider reste normal (pas trigger) pour une détection de surface précise
+        // Keep collider non-trigger for precise surface detection
         wallCollider.isTrigger = false;
     }
 
@@ -75,11 +98,54 @@ public class wall : MonoBehaviour
 
     void MoveWall()
     {
+        // If we are currently pausing at an endpoint, count down and do not move
+        if (isPausing)
+        {
+            pauseRemaining -= Time.deltaTime;
+            if (pauseRemaining <= 0f)
+            {
+                isPausing = false;
+                // After the pause, flip the target and resume movement
+                target = (target == pointA) ? pointB : pointA;
+                SetScrapingSoundsActive(true);
+            }
+            return;
+        }
+
+        // Move toward the current target
         transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
 
-        if (Vector3.Distance(transform.position, target) < 0.1f)
+        // If we reached the target, start a pause (if any) before switching direction
+        if (Vector3.Distance(transform.position, target) < targetReachThreshold)
         {
-            target = target == pointA ? pointB : pointA;
+            if (endStopDuration > 0f)
+            {
+                isPausing = true;
+                pauseRemaining = endStopDuration;
+                SetScrapingSoundsActive(false);
+            }
+            else
+            {
+                // No pause configured: immediately switch target (original behavior)
+                target = (target == pointA) ? pointB : pointA;
+            }
+        }
+    }
+
+    // Utility to pause/unpause all assigned scraping sounds
+    void SetScrapingSoundsActive(bool active)
+    {
+        foreach (var src in scrapingAudioSources)
+        {
+            if (src == null) continue;
+            if (active)
+            {
+                if (!src.isPlaying) src.UnPause();
+            }
+            else
+            {
+                src.Pause();
+            }
         }
     }
 
@@ -87,18 +153,18 @@ public class wall : MonoBehaviour
     {
         if (hasExploded || playerCamera == null || wallCollider == null) return;
 
-        // Calcul de la distance RÉELLE à la surface du mur
+        // Calculate REAL distance to the wall surface
         Vector3 cameraPosition = playerCamera.transform.position;
         Vector3 closestPointOnWall = wallCollider.ClosestPoint(cameraPosition);
         float distanceToSurface = Vector3.Distance(cameraPosition, closestPointOnWall);
 
-        // Debug visuel pour voir la détection
+        // Visual debug for detection
         Debug.DrawLine(cameraPosition, closestPointOnWall, Color.red, 0.1f);
 
-        // Si trop proche de la surface
+        // If too close to the surface
         if (distanceToSurface <= surfaceDetectionDistance)
         {
-            Debug.Log($"Collision détectée ! Distance à la surface: {distanceToSurface:F3}m");
+            Debug.Log($"Collision detected! Distance to surface: {distanceToSurface:F3}m");
             TriggerExplosion();
         }
     }
@@ -108,16 +174,16 @@ public class wall : MonoBehaviour
         if (hasExploded) return;
 
         hasExploded = true;
-        Debug.Log("💥 Explosion du mur !");
+        Debug.Log("💥 Wall explosion!");
 
-        // Jouer le son
+        // Play sound
         if (explosionSound != null && audioSource != null)
         {
             audioSource.clip = explosionSound;
             audioSource.Play();
         }
 
-        // Créer l'effet d'explosion
+        // Create explosion effect
         if (explosionPrefab != null)
         {
             GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
@@ -128,7 +194,7 @@ public class wall : MonoBehaviour
             CreateSimpleExplosionEffect();
         }
 
-        // Détruire le mur après le son
+        // Destroy wall after the sound finishes (or default delay)
         float destroyDelay = explosionSound != null ? explosionSound.length : 1f;
         Destroy(gameObject, destroyDelay);
     }
@@ -157,7 +223,7 @@ public class wall : MonoBehaviour
         Destroy(explosion, 3f);
     }
 
-    // Méthodes publiques utiles
+    // Useful public methods
     public void ForceExplosion()
     {
         TriggerExplosion();
@@ -170,19 +236,19 @@ public class wall : MonoBehaviour
         target = pointB;
     }
 
-    // Visualisation dans l'éditeur
+    // Editor visualization
     void OnDrawGizmosSelected()
     {
-        // Ligne de trajectoire
+        // Motion path line
         Gizmos.color = Color.green;
         Gizmos.DrawLine(pointA, pointB);
 
-        // Points A et B
+        // Points A and B
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(pointA, 0.2f);
         Gizmos.DrawWireSphere(pointB, 0.2f);
 
-        // Zone de détection autour de la caméra
+        // Detection zone around the camera
         if (playerCamera != null)
         {
             Gizmos.color = Color.yellow;
