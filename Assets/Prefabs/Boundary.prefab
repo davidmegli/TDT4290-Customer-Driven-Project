@@ -300,8 +300,8 @@ GameObject:
   - component: {fileID: 6936912097617904041}
   - component: {fileID: 1211225927678176091}
   - component: {fileID: 2962279431186578776}
-  - component: {fileID: 7677836907965817310}
   - component: {fileID: 3101030333247749292}
+  - component: {fileID: 8894752569215414924}
   m_Layer: 0
   m_Name: BoundaryWallEast
   m_TagString: Untagged
@@ -403,19 +403,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7677836907965817310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1365803640618116923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b61522c5beba0343a790a987971d3e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WallCollisions
-  collisionSound: {fileID: 8300000, guid: 9d5753a1c2eaeef4780101fde1dfb09d, type: 3}
 --- !u!54 &3101030333247749292
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -443,6 +430,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8894752569215414924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365803640618116923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63ab499117e73774fb07aa40c851c532, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WallCollisionsNew
+  collisionSound: {fileID: 8300000, guid: 2008ab764084d93449faf3846edb98d1, type: 3}
+  triggeringTags:
+  - PlayerHand
+  - Player
+  gameOverDistance: 0.02
 --- !u!1 &2459436331889591781
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,8 +459,8 @@ GameObject:
   - component: {fileID: 5805491420787794807}
   - component: {fileID: 2313373481808578949}
   - component: {fileID: 1858229687580368774}
-  - component: {fileID: 6510169322725163776}
   - component: {fileID: 2007745430644006514}
+  - component: {fileID: 8779299053634003765}
   m_Layer: 0
   m_Name: BoundaryWallWest
   m_TagString: Untagged
@@ -558,19 +562,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6510169322725163776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2459436331889591781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b61522c5beba0343a790a987971d3e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WallCollisions
-  collisionSound: {fileID: 8300000, guid: 9d5753a1c2eaeef4780101fde1dfb09d, type: 3}
 --- !u!54 &2007745430644006514
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -598,6 +589,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8779299053634003765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2459436331889591781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63ab499117e73774fb07aa40c851c532, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WallCollisionsNew
+  collisionSound: {fileID: 8300000, guid: 2008ab764084d93449faf3846edb98d1, type: 3}
+  triggeringTags:
+  - PlayerHand
+  - Player
+  gameOverDistance: 0.02
 --- !u!1 &2496145497633688720
 GameObject:
   m_ObjectHideFlags: 0
@@ -1221,8 +1229,8 @@ GameObject:
   - component: {fileID: 3102136806095567176}
   - component: {fileID: 6595239774261187514}
   - component: {fileID: 7085848054251636153}
-  - component: {fileID: 2433346555734006079}
   - component: {fileID: 445894356624937138}
+  - component: {fileID: 4284289619772530495}
   m_Layer: 0
   m_Name: BoundaryWallSouth
   m_TagString: Untagged
@@ -1324,19 +1332,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2433346555734006079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6466486394157522906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b61522c5beba0343a790a987971d3e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WallCollisions
-  collisionSound: {fileID: 8300000, guid: 9d5753a1c2eaeef4780101fde1dfb09d, type: 3}
 --- !u!54 &445894356624937138
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1364,6 +1359,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4284289619772530495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6466486394157522906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63ab499117e73774fb07aa40c851c532, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WallCollisionsNew
+  collisionSound: {fileID: 8300000, guid: 2008ab764084d93449faf3846edb98d1, type: 3}
+  triggeringTags:
+  - PlayerHand
+  - Player
+  gameOverDistance: 0.02
 --- !u!1 &7062811571589608677
 GameObject:
   m_ObjectHideFlags: 0
@@ -1520,8 +1532,8 @@ GameObject:
   - component: {fileID: 1166728204666936066}
   - component: {fileID: 6970149739366593008}
   - component: {fileID: 6442945315428919283}
-  - component: {fileID: 1943573922319809397}
   - component: {fileID: 6592358883565200903}
+  - component: {fileID: 8391662191168002711}
   m_Layer: 0
   m_Name: BoundaryWallNorth
   m_TagString: Untagged
@@ -1623,19 +1635,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1943573922319809397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7098129304889884048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b61522c5beba0343a790a987971d3e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WallCollisions
-  collisionSound: {fileID: 8300000, guid: 9d5753a1c2eaeef4780101fde1dfb09d, type: 3}
 --- !u!54 &6592358883565200903
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1663,6 +1662,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8391662191168002711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7098129304889884048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63ab499117e73774fb07aa40c851c532, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WallCollisionsNew
+  collisionSound: {fileID: 8300000, guid: 2008ab764084d93449faf3846edb98d1, type: 3}
+  triggeringTags:
+  - PlayerHand
+  - Player
+  gameOverDistance: 0.02
 --- !u!1 &8759508800133275051
 GameObject:
   m_ObjectHideFlags: 0
