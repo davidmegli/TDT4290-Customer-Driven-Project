@@ -38,6 +38,9 @@ public class LevelManager : MonoBehaviour
 
         // Load the first level at startup
         LoadLevel(0);
+
+        // added: ensure elevator is set to false after spawning in the first level
+        elevator.gameObject.SetActive(false);
     }
 
     private void OnDestroy()
