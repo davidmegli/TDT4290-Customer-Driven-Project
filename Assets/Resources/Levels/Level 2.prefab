@@ -312,6 +312,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8200739761847427254}
     m_Modifications:
+    - target: {fileID: 406531218243455705, guid: 9116bbdab683c5141a86f9ceeaba66c4, type: 3}
+      propertyPath: targetTag
+      value: RightHandCube
+      objectReference: {fileID: 0}
     - target: {fileID: 3637451090259232330, guid: 9116bbdab683c5141a86f9ceeaba66c4, type: 3}
       propertyPath: m_Name
       value: SimpleXRButton
@@ -319,6 +323,10 @@ PrefabInstance:
     - target: {fileID: 3637451090259232330, guid: 9116bbdab683c5141a86f9ceeaba66c4, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5378382792445694286, guid: 9116bbdab683c5141a86f9ceeaba66c4, type: 3}
+      propertyPath: targetTag
+      value: LeftHandCube
       objectReference: {fileID: 0}
     - target: {fileID: 8605686198821252737, guid: 9116bbdab683c5141a86f9ceeaba66c4, type: 3}
       propertyPath: m_LocalScale.x

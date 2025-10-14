@@ -310,6 +310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandTriggeredAudio
   sourceCollider: {fileID: 9110618398480267019}
   handCollider: {fileID: 2128076429}
+  targetTag: 
   useDistanceVolume: 1
   minDistance: 0.1
   maxDistance: 0.5
@@ -465,6 +466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandTriggeredAudio
   sourceCollider: {fileID: 9110618398480267019}
   handCollider: {fileID: 526659991}
+  targetTag: 
   useDistanceVolume: 1
   minDistance: 0.1
   maxDistance: 0.5
@@ -968,6 +970,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LeftHandCube
       objectReference: {fileID: 0}
+    - target: {fileID: 1285011141181474299, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
+      propertyPath: m_TagString
+      value: LeftHandCube
+      objectReference: {fileID: 0}
     - target: {fileID: 5384226625992349768, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1018,6 +1024,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8707125779313083445, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
       propertyPath: m_Name
+      value: RightHandCube
+      objectReference: {fileID: 0}
+    - target: {fileID: 8707125779313083445, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
+      propertyPath: m_TagString
       value: RightHandCube
       objectReference: {fileID: 0}
     m_RemovedComponents: []

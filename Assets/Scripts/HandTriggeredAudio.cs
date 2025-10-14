@@ -7,6 +7,9 @@ public class HandTriggeredAudio : MonoBehaviour
     [Tooltip("Left or Right hand Cube object")]
     public BoxCollider handCollider;
 
+    [Tooltip("The tag of the hand Cube")]
+    public string targetTag;
+
     [Tooltip("On/off dynamic volume based on distance")]
     public bool useDistanceVolume = true;
 
@@ -38,6 +41,11 @@ public class HandTriggeredAudio : MonoBehaviour
         // if (!handCollider)
         if (!sourceCollider) sourceCollider = GetComponentInParent<BoxCollider>();
         if (!_audio) TryGetComponent(out _audio);
+        if (!handCollider && !string.IsNullOrEmpty(targetTag))
+        {
+            GameObject taggedObj = GameObject.FindWithTag(targetTag);
+            if (taggedObj) handCollider = taggedObj.GetComponent<BoxCollider>();
+        }
     }
     void Start()
     {
@@ -46,6 +54,11 @@ public class HandTriggeredAudio : MonoBehaviour
         {
             var inParent = GetComponentInParent<BoxCollider>();
             if (inParent) sourceCollider = inParent;
+        }
+        if (!handCollider && !string.IsNullOrEmpty(targetTag))
+        {
+            GameObject taggedObj = GameObject.FindWithTag(targetTag);
+            if (taggedObj) handCollider = taggedObj.GetComponent<BoxCollider>();
         }
         if (!_audio) TryGetComponent(out _audio);
         if (!sourceCollider)
