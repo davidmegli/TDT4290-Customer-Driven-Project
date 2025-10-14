@@ -40,7 +40,7 @@ public class LevelManager : MonoBehaviour
         LoadLevel(0);
 
         // added: ensure elevator is set to false after spawning in the first level
-        elevator.gameObject.SetActive(false);
+        // elevator.gameObject.SetActive(false);
     }
 
     private void OnDestroy()
@@ -93,13 +93,12 @@ public class LevelManager : MonoBehaviour
         {
             Destroy(currentLevelInstance);
         }
-        
-        elevator.gameObject.SetActive(true);
     }
 
     public static void StartNextLevel()
     {
         int nextIndex = Instance.currentLevelIndex + 1;
+        Instance.elevator.gameObject.SetActive(true);
         Instance.LoadLevel(nextIndex);
     }
 
