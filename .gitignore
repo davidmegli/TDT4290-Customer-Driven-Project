@@ -20,6 +20,8 @@ Logs/
 # Crash Reports
 sysinfo.txt
 
+.utmp/
+
 # Visual Studio / MonoDevelop generated files
 *.csproj
 *.unityproj

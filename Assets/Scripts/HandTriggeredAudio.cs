@@ -1,11 +1,14 @@
 
 using UnityEngine;
-public class SurfaceAttachAudio : MonoBehaviour
+public class HandTriggeredAudio : MonoBehaviour
 {
     [Tooltip("BoxCollider til kuben lyden skal 'komme fra'")]
     public BoxCollider sourceCollider;
-    [Tooltip("Transform med AudioListener (ofte Main Camera). Tomt = Camera.main")]
-    public Transform listener;
+    [Tooltip("Left or Right hand Cube object")]
+    public BoxCollider handCollider;
+
+    [Tooltip("The tag of the hand Cube")]
+    public string targetTag;
 
     [Tooltip("On/off dynamic volume based on distance")]
     public bool useDistanceVolume = true;
@@ -35,34 +38,41 @@ public class SurfaceAttachAudio : MonoBehaviour
     private AudioSource _audio;
     void Reset()
     {
-        if (!listener && Camera.main) listener = Camera.main.transform;
+        // if (!handCollider)
         if (!sourceCollider) sourceCollider = GetComponentInParent<BoxCollider>();
         if (!_audio) TryGetComponent(out _audio);
+        if (!handCollider && !string.IsNullOrEmpty(targetTag))
+        {
+            GameObject taggedObj = GameObject.FindWithTag(targetTag);
+            if (taggedObj) handCollider = taggedObj.GetComponent<BoxCollider>();
+        }
     }
     void Start()
     {
         // Prøv igjen i Start i tilfelle hierarkiet ble satt opp etterpå
-        if (!listener && Camera.main) listener = Camera.main.transform;
         if (!sourceCollider)
         {
             var inParent = GetComponentInParent<BoxCollider>();
             if (inParent) sourceCollider = inParent;
         }
+        if (!handCollider && !string.IsNullOrEmpty(targetTag))
+        {
+            GameObject taggedObj = GameObject.FindWithTag(targetTag);
+            if (taggedObj) handCollider = taggedObj.GetComponent<BoxCollider>();
+        }
         if (!_audio) TryGetComponent(out _audio);
         if (!sourceCollider)
             Debug.LogWarning($"{name}: SurfaceAttachAudio mangler SourceCollider. Dra inn kubens BoxCollider i Inspector.");
-        if (!listener)
-            Debug.LogWarning($"{name}: SurfaceAttachAudio mangler Listener. Dra inn kameraet eller sett Camera.main-tag.");
         if (!_audio && useDistanceVolume)
             Debug.LogWarning($"{name}: SurfaceAttachAudio found no AudioSource on the same GameObject");
     }
     void LateUpdate()
     {
-        if (!sourceCollider || (!listener && !Camera.main)) return;
-        Vector3 listenerPos = listener ? listener.position : Camera.main.transform.position;
-        Vector3 closest = sourceCollider.ClosestPoint(listenerPos);
+        if (!sourceCollider || !handCollider) return;
+        Vector3 handCenter = handCollider.bounds.center;
+        Vector3 closest = sourceCollider.ClosestPoint(handCenter);
         transform.position = closest;
-        CurrentDistance = Vector3.Distance(listenerPos, closest);
+        CurrentDistance = Vector3.Distance(handCenter, closest);
 
         if (useDistanceVolume && _audio)
         {
