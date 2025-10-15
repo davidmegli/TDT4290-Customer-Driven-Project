@@ -909,6 +909,18 @@ PrefabInstance:
       propertyPath: m_TagString
       value: LeftHandCube
       objectReference: {fileID: 0}
+    - target: {fileID: 3111235400086974570, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
+      propertyPath: m_Size.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3111235400086974570, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
+      propertyPath: m_Size.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3111235400086974570, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
+      propertyPath: m_Size.z
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 5384226625992349768, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -956,6 +968,18 @@ PrefabInstance:
     - target: {fileID: 5384226625992705128, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6859688701657606615, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
+      propertyPath: m_Size.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6859688701657606615, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
+      propertyPath: m_Size.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6859688701657606615, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
+      propertyPath: m_Size.z
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8707125779313083445, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
       propertyPath: m_Name

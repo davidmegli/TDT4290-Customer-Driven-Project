@@ -58,6 +58,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+  - component: {fileID: 5575062705189304285}
+  - component: {fileID: 2694876181580501617}
+  - component: {fileID: 6155496544301390545}
+  - component: {fileID: 9094398129732343943}
+  - component: {fileID: 2706428584079304192}
+  - component: {fileID: 4257544935887091185}
   - component: {fileID: 7996245395569927533}
   - component: {fileID: 1982860604855402900}
   - component: {fileID: 5451358279137554028}
@@ -156,7 +162,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -168,6 +174,48 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4089914010965381876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63ab499117e73774fb07aa40c851c532, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WallCollisionsNew
+  collisionSound: {fileID: 8300000, guid: 2008ab764084d93449faf3846edb98d1, type: 3}
+  triggeringTags:
+  - PlayerHand
+  - Player
+  - PlayerHead
+  gameOverDistance: 0.02
+  releaseDistance: 0.05
+  minRepeatInterval: 1
+--- !u!54 &4257544935887091185
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4089914010965381876}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!1 &8879584851201251669
   m_GameObject: {fileID: 5670810755135080180}
   m_Enabled: 1
   m_EditorHideFlags: 0
