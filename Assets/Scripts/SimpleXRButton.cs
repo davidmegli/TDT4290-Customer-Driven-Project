@@ -4,7 +4,7 @@ public class SimpleXRButton : MonoBehaviour
 {
     public Color defaultColor = Color.green;
     public Color pressedColor = Color.red;
-    public bool triggersLevelCompletion = false;
+    public bool triggersLevelCompletion = true;
 
     private Renderer rend;
 
