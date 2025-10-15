@@ -628,6 +628,8 @@ GameObject:
   - component: {fileID: 8042746047432684173}
   - component: {fileID: 8428709066858478905}
   - component: {fileID: 3944999030396652919}
+  - component: {fileID: 4415104787742519073}
+  - component: {fileID: 1086897598381062927}
   m_Layer: 0
   m_Name: WallLevel3
   m_TagString: Untagged
@@ -755,6 +757,53 @@ MonoBehaviour:
   explosionVolume: 1
   surfaceDetectionDistance: 0.1
   target: {x: 0, y: 0, z: 0}
+--- !u!114 &4415104787742519073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8029863102570114989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63ab499117e73774fb07aa40c851c532, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WallCollisionsNew
+  collisionSound: {fileID: 8300000, guid: 2008ab764084d93449faf3846edb98d1, type: 3}
+  triggeringTags:
+  - PlayerHand
+  - Player
+  - PlayerHead
+  gameOverDistance: 0.02
+  releaseDistance: 0.05
+  minRepeatInterval: 1
+--- !u!54 &1086897598381062927
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8029863102570114989}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8276425797691274748
 GameObject:
   m_ObjectHideFlags: 0
