@@ -11,6 +11,8 @@ TagManager:
   - Cube_Spawn_Point_1
   - Cube_Spawn_Point_2
   - PlayerHand
+  - LeftHandCube
+  - RightHandCube
   layers:
   - Default
   - TransparentFX
