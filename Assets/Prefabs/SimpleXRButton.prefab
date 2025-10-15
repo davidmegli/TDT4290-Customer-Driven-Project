@@ -144,6 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandTriggeredAudio
   sourceCollider: {fileID: 0}
   handCollider: {fileID: 0}
+  targetTag: RightHandCube
   useDistanceVolume: 1
   minDistance: 0.01
   maxDistance: 0.6
@@ -622,6 +623,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandTriggeredAudio
   sourceCollider: {fileID: 0}
   handCollider: {fileID: 0}
+  targetTag: LeftHandCube
   useDistanceVolume: 1
   minDistance: 0.01
   maxDistance: 0.6
