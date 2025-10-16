@@ -39,6 +39,7 @@ public class LevelManager : MonoBehaviour
         // Load the first level at startup
         LoadLevel(0);
 
+        // added: ensure elevator is set to false after spawning in the first level
         elevator.gameObject.SetActive(false);
     }
 
@@ -93,13 +94,13 @@ public class LevelManager : MonoBehaviour
             Destroy(currentLevelInstance);
             Debug.Log("level destroyed");
         }
-        
         elevator.gameObject.SetActive(true);
     }
 
     public static void StartNextLevel()
     {
         int nextIndex = Instance.currentLevelIndex + 1;
+        // Instance.elevator.gameObject.SetActive(true);
         Instance.LoadLevel(nextIndex);
     }
 
