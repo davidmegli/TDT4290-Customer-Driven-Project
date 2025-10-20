@@ -144,6 +144,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceAttachAudio
   sourceCollider: {fileID: 0}
   listener: {fileID: 0}
+  useDistanceVolume: 1
+  minDistance: 0
+  maxDistance: 0
+  volumeAtMinDistance: 1
+  volumeAtMaxDistance: 0
+  volumeLerpSpeed: 10
 --- !u!1 &4618469095671613857
 GameObject:
   m_ObjectHideFlags: 0
@@ -452,7 +458,7 @@ GameObject:
   - component: {fileID: 8652638885112870051}
   - component: {fileID: 8007746679714288420}
   - component: {fileID: 90700186306858434}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallLevel4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1184,6 +1190,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceAttachAudio
   sourceCollider: {fileID: 0}
   listener: {fileID: 0}
+  useDistanceVolume: 1
+  minDistance: 0
+  maxDistance: 0
+  volumeAtMinDistance: 1
+  volumeAtMaxDistance: 0
+  volumeLerpSpeed: 10
 --- !u!1001 &866355485503765530
 PrefabInstance:
   m_ObjectHideFlags: 0

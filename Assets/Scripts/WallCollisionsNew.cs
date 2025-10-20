@@ -41,12 +41,10 @@ public class WallCollisionsNew : MonoBehaviour
         audioSource.reverbZoneMix = 0f;   
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnCollisionStay(Collision collision)
     {
-        if (!IsPlayerTag(other)) return;
-
-        Vector3 p = other.bounds.center;
-        float dist = Vector3.Distance(wallCol.ClosestPoint(p), p);
+        ContactPoint contact = collision.contacts[0];
+        float dist = Vector3.Distance(contact.point, collision.transform.position);
 
         // Latchet: wait to we are outside of the barrier
         if (latched)
@@ -60,12 +58,12 @@ public class WallCollisionsNew : MonoBehaviour
         {
             PlayCollisionSound();
             lastPlayTime = Time.time;
-            latched = true; // dont spam in OnTriggerStay
+            latched = true; // dont spam in OnCollisionStay
             Debug.Log($"[WallCollisions] GAME OVER (dist={dist:F3} m)");
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnCollisionExit(Collision collision)
     {
         // when we are outside, release latch 
         latched = false;

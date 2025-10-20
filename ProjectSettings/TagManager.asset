@@ -20,11 +20,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - PlayerHand
+  - Button
+  - Wall
+  - Elevator
   - 
   - 
   - 

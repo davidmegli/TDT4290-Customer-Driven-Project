@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class SimpleXRButton : MonoBehaviour
 {
     public Color defaultColor = Color.green;
@@ -14,26 +15,19 @@ public class SimpleXRButton : MonoBehaviour
         rend.material.color = defaultColor;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        // Optional: filter by tag so only hands (or player cube) can press
-        if (other.CompareTag("PlayerHand") || other.CompareTag("Player"))
+        rend.material.color = pressedColor;
+        Debug.Log("Button touched by: " + collision.gameObject.name);
+        if (triggersLevelCompletion)
         {
-            rend.material.color = pressedColor;
-            Debug.Log("Button touched by: " + other.gameObject.name);
-            if (triggersLevelCompletion)
-            {
-                LevelManager.LevelCompleted();
-            }
+            LevelManager.LevelCompleted();
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnCollisionExit(Collision collision)
     {
-        if (other.CompareTag("PlayerHand") || other.CompareTag("Player"))
-        {
-            rend.material.color = defaultColor;
-            Debug.Log("Button released by: " + other.gameObject.name);
-        }
+        rend.material.color = defaultColor;
+        Debug.Log("Button released by: " + collision.gameObject.name);
     }
 }

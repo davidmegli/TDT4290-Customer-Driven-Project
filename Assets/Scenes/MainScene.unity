@@ -1063,13 +1063,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5384226625992600874, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5384226625992705128, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
       propertyPath: m_Name
       value: OVRCameraRig
       objectReference: {fileID: 0}
     - target: {fileID: 5384226625992705128, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5384226625992705128, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5384226625992714288, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5384226625992720036, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6859688701657606615, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
       propertyPath: m_Size.x
@@ -1090,6 +1106,10 @@ PrefabInstance:
     - target: {fileID: 8707125779313083445, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
       propertyPath: m_TagString
       value: RightHandCube
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746903363123125678, guid: d1f59b196e71bac43a317b15499ce1f0, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1627,5 +1647,3 @@ SceneRoots:
   - {fileID: 9110618398480267017}
   - {fileID: 2006772489}
   - {fileID: 7907543357640775905}
-  - {fileID: 531961887}
-
