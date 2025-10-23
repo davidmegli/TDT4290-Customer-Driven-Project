@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6250926108728651093
 Transform:
   m_ObjectHideFlags: 0
@@ -166,6 +166,7 @@ GameObject:
   - component: {fileID: 3101015338931793658}
   - component: {fileID: 4121349567324343757}
   - component: {fileID: 7503543954907392919}
+  - component: {fileID: 4490319937619157363}
   m_Layer: 8
   m_Name: SimpleXRButton
   m_TagString: Untagged
@@ -261,12 +262,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.5, z: 0.05}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1.0585927, z: 0.099999994}
+  m_Center: {x: 0, y: -0.017403584, z: -0.081813626}
 --- !u!114 &3101015338931793658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,9 +364,9 @@ AudioSource:
   m_GameObject: {fileID: 3637451090259232330}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 674a0c2281893bc468d061b2de703bb7, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 02951d94f9095354ea26809e8e633122, type: 3}
+  m_Resource: {fileID: 8300000, guid: 837807aae730c35419b4bb56679018ac, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.674
   m_Pitch: 1
@@ -451,6 +452,89 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4490319937619157363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3637451090259232330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c3684b22f00604a97bb68037fcf4cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: SteamAudioUnity::SteamAudio.SteamAudioSource
+  directBinaural: 1
+  interpolation: 0
+  perspectiveCorrection: 0
+  distanceAttenuation: 1
+  distanceAttenuationInput: 1
+  distanceAttenuationValue: 1
+  airAbsorption: 1
+  airAbsorptionInput: 0
+  airAbsorptionLow: 1
+  airAbsorptionMid: 1
+  airAbsorptionHigh: 1
+  directivity: 0
+  directivityInput: 0
+  dipoleWeight: 0
+  dipolePower: 0
+  directivityValue: 1
+  occlusion: 1
+  occlusionInput: 0
+  occlusionType: 1
+  occlusionRadius: 1.5
+  occlusionSamples: 80
+  occlusionValue: 1
+  transmission: 0
+  transmissionType: 0
+  transmissionInput: 0
+  transmissionLow: 1
+  transmissionMid: 1
+  transmissionHigh: 1
+  maxTransmissionSurfaces: 1
+  directMixLevel: 1
+  reflections: 1
+  reflectionsType: 0
+  useDistanceCurveForReflections: 0
+  currentBakedSource: {fileID: 0}
+  reverbTimeLow: 0
+  reverbTimeMid: 0
+  reverbTimeHigh: 0
+  hybridReverbEQLow: 1
+  hybridReverbEQMid: 1
+  hybridReverbEQHigh: 1
+  hybridReverbDelay: 0
+  applyHRTFToReflections: 1
+  reflectionsMixLevel: 1
+  pathing: 0
+  pathingProbeBatch: {fileID: 0}
+  pathValidation: 1
+  findAlternatePaths: 1
+  pathingEQ:
+  - 1
+  - 1
+  - 1
+  pathingSH:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  applyHRTFToPathing: 0
+  pathingMixLevel: 1
+  normalizePathingEQ: 0
 --- !u!1 &5408503280654974952
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,7 +552,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3333736070309596715
 Transform:
   m_ObjectHideFlags: 0

@@ -3,9 +3,9 @@ using System.Collections;
 
 public class Elevator : MonoBehaviour
 {
-    [SerializeField] public float Distance;
+    [SerializeField] public float Distance; // ikke brukt lenger, beholdt for minimal diff
 
-    // audio 
+    // audio
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip plingClip;
     [SerializeField] private AudioClip doorOpenClip;
@@ -13,27 +13,38 @@ public class Elevator : MonoBehaviour
     [SerializeField] private AudioClip elevatorMoveClip;
     [SerializeField] private AudioClip elevatorMusicClip;
 
-    private bool PlayerIsInside;
+    private bool isActive = false;
+
+    // Trigger/dwell
+    [SerializeField] private float requiredStaySeconds = 2f;
+    private bool playerIsInside = false;
+    private Coroutine dwellCoroutine;
     private Coroutine levelSequenceCoroutine;
 
-    private bool isActive = false;
+    // For å hindre auto-start hvis noe allerede overlapper ved aktivering
+    [SerializeField] private bool requireExitBeforeEnter = true;
+    private bool armed = false;
 
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null) audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
-        audioSource.spatialize = true;     
+        audioSource.spatialize = true;
         audioSource.spatialBlend = 1f;
         audioSource.dopplerLevel = 0f;
-        audioSource.reverbZoneMix = 0f;   
+        audioSource.reverbZoneMix = 0f;
     }
 
     private void OnEnable()
     {
         Debug.Log("Elevator enabled.");
-        // When elevator gets activated by LevelManager after LevelCompleted()
         isActive = true;
+
+        // reset trigger state
+        playerIsInside = false;
+        if (dwellCoroutine != null) { StopCoroutine(dwellCoroutine); dwellCoroutine = null; }
+        armed = !requireExitBeforeEnter; // hvis vi ikke krever exit→enter, er den armert ved aktivering
 
         StartCoroutine(ElevatorActivationSequence());
     }
@@ -41,37 +52,61 @@ public class Elevator : MonoBehaviour
     private IEnumerator ElevatorActivationSequence()
     {
         if (!isActive) yield break;
+
         PlayPling();
-        yield return new WaitForSeconds(plingClip.length);
+        if (plingClip) yield return new WaitForSeconds(plingClip.length);
+
         PlayDoorOpen();
-        yield return new WaitForSeconds(doorOpenClip.length);
+        if (doorOpenClip) yield return new WaitForSeconds(doorOpenClip.length);
+
         PlayElevatorMusic();
     }
 
-    void Update()
+    // --- TRIGGER-LOGIKK ---
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (!isActive)
+        if (!isActive) return;
+
+        // Ikke start dwell før vi er "armet" (har sett en exit etter aktivering, hvis krevd)
+        if (!armed) return;
+
+        if (!playerIsInside)
         {
-            return; // ensure elevator is active before updating
+            playerIsInside = true;
+            if (dwellCoroutine == null)
+                dwellCoroutine = StartCoroutine(DwellThenStart());
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!isActive) return;
+
+        // Første gyldige exit etter aktivering "armer" heisen
+        armed = true;
+
+        playerIsInside = false;
+
+        if (dwellCoroutine != null)
+        {
+            StopCoroutine(dwellCoroutine);
+            dwellCoroutine = null;
+        }
+    }
+
+    private IEnumerator DwellThenStart()
+    {
+        float t = 0f;
+        while (t < requiredStaySeconds)
+        {
+            if (!isActive || !playerIsInside) yield break; // avbrutt
+            t += Time.deltaTime;
+            yield return null;
         }
 
-        var player = Camera.main.transform; // får transform til hovedkameraet
-
-        // Sjekker om spilleren er innenfor en viss avstand fra heisen
-        if (Vector2.Distance(new Vector2(player.position.x, player.position.z), new Vector2(transform.position.x, transform.position.z)) < Distance)
-        {
-            if (!PlayerIsInside) levelSequenceCoroutine = StartCoroutine(LoadNextLevelSequence());
-            PlayerIsInside = true;
-        }
-        else
-        {
-            PlayerIsInside = false;
-            if (levelSequenceCoroutine != null)
-            {
-                StopCoroutine(levelSequenceCoroutine);
-                levelSequenceCoroutine = null;
-            }
-        }
+        if (levelSequenceCoroutine == null)
+            levelSequenceCoroutine = StartCoroutine(LoadNextLevelSequence());
     }
 
     private IEnumerator LoadNextLevelSequence()
@@ -80,7 +115,7 @@ public class Elevator : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         PlayElevatorMove();
-        yield return new WaitForSeconds(elevatorMoveClip.length);
+        if (elevatorMoveClip) yield return new WaitForSeconds(elevatorMoveClip.length);
 
         StopElevatorMove();
 
@@ -97,27 +132,15 @@ public class Elevator : MonoBehaviour
 
         gameObject.SetActive(false);
         isActive = false; // deactivate elevator after use
+        levelSequenceCoroutine = null;
     }
 
-    private void PlayPling()
-    {
-        if (plingClip) audioSource.PlayOneShot(plingClip);
-    }
+    // --- AUDIO HELPERS ---
 
-    private void PlayDoorOpen()
-    {
-        if (doorOpenClip) audioSource.PlayOneShot(doorOpenClip);
-    }
-
-    private void PlayDoorClose()
-    {
-        if (doorCloseClip) audioSource.PlayOneShot(doorCloseClip);
-    }
-
-    private void PlayElevatorMove()
-    {
-        if (elevatorMoveClip) audioSource.PlayOneShot(elevatorMoveClip);
-    }
+    private void PlayPling()        { if (plingClip)        audioSource.PlayOneShot(plingClip); }
+    private void PlayDoorOpen()     { if (doorOpenClip)     audioSource.PlayOneShot(doorOpenClip); }
+    private void PlayDoorClose()    { if (doorCloseClip)    audioSource.PlayOneShot(doorCloseClip); }
+    private void PlayElevatorMove() { if (elevatorMoveClip) audioSource.PlayOneShot(elevatorMoveClip); }
 
     private void StopElevatorMove()
     {
@@ -137,7 +160,7 @@ public class Elevator : MonoBehaviour
             audioSource.Play();
         }
     }
-    
+
     private void StopElevatorMusic()
     {
         if (audioSource.isPlaying)

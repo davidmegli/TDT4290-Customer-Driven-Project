@@ -15,19 +15,19 @@ public class SimpleXRButton : MonoBehaviour
         rend.material.color = defaultColor;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         rend.material.color = pressedColor;
-        Debug.Log("Button touched by: " + collision.gameObject.name);
+        Debug.Log("Button touched by: " + other.gameObject.name);
         if (triggersLevelCompletion)
         {
             LevelManager.LevelCompleted();
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
         rend.material.color = defaultColor;
-        Debug.Log("Button released by: " + collision.gameObject.name);
+        Debug.Log("Button released by: " + other.gameObject.name);
     }
 }
