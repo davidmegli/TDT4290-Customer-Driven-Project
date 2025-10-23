@@ -12,6 +12,10 @@ public class Elevator : MonoBehaviour
     [SerializeField] private AudioClip doorCloseClip;
     [SerializeField] private AudioClip elevatorMoveClip;
     [SerializeField] private AudioClip elevatorMusicClip;
+    [SerializeField] private GameObject door;
+
+    private bool isDoorOpening = false;
+    private float doorSpeed = 3f;
 
     private bool isActive = false;
 
@@ -34,6 +38,13 @@ public class Elevator : MonoBehaviour
         audioSource.spatialBlend = 1f;
         audioSource.dopplerLevel = 0f;
         audioSource.reverbZoneMix = 0f;
+    }
+
+    private void Update()
+    {
+        var doorPos = door.transform.localPosition;
+
+        door.transform.localPosition = Vector3.Lerp(doorPos, new Vector3(isDoorOpening ? 1.5f : 0f, 0, 0), Time.deltaTime * doorSpeed);
     }
 
     private void OnEnable()
@@ -138,8 +149,17 @@ public class Elevator : MonoBehaviour
     // --- AUDIO HELPERS ---
 
     private void PlayPling()        { if (plingClip)        audioSource.PlayOneShot(plingClip); }
-    private void PlayDoorOpen()     { if (doorOpenClip)     audioSource.PlayOneShot(doorOpenClip); }
-    private void PlayDoorClose()    { if (doorCloseClip)    audioSource.PlayOneShot(doorCloseClip); }
+    private void PlayDoorOpen()
+    {
+        if (doorOpenClip) audioSource.PlayOneShot(doorOpenClip);
+
+        isDoorOpening = true;
+    }
+    private void PlayDoorClose() {
+        if (doorCloseClip) audioSource.PlayOneShot(doorCloseClip);
+
+        isDoorOpening = false;
+    }
     private void PlayElevatorMove() { if (elevatorMoveClip) audioSource.PlayOneShot(elevatorMoveClip); }
 
     private void StopElevatorMove()
