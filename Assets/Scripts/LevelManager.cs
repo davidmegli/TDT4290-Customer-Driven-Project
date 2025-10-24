@@ -9,7 +9,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Elevator elevator;
     private List<GameObject> levels = new List<GameObject>();
     private GameObject currentLevelInstance;
-    private int currentLevelIndex = 0;
+    public static int currentLevelIndex = 0;
     private void Awake()
     {
         // Singleton pattern for easy global access 
@@ -22,6 +22,7 @@ public class LevelManager : MonoBehaviour
         // Load all level prefabs from Resources/Levels 
         LoadAllLevels();
     }
+    
     private void Start()
     { 
             // Subscribe to the level-completed event 
@@ -73,7 +74,7 @@ public class LevelManager : MonoBehaviour
     }
     public static void StartNextLevel()
     {
-        int nextIndex = Instance.currentLevelIndex + 1;
+        int nextIndex = currentLevelIndex + 1;
         // Instance.elevator.gameObject.SetActive(true);
         Instance.LoadLevel(nextIndex);
     }

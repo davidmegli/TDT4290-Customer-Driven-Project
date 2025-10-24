@@ -113,6 +113,8 @@ public class Elevator : MonoBehaviour
             Debug.Log("OnTriggerEnter_5");
             dwellCoroutine = StartCoroutine(DwellThenStart());
         }
+
+        GameEvents.Fire(VoiceLineAction.EnteredElevator);
     }
 
     private void OnTriggerExit(Collider other)

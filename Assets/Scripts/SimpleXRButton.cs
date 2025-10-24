@@ -23,6 +23,7 @@ public class SimpleXRButton : MonoBehaviour
         {
             LevelManager.LevelCompleted();
         }
+        GameEvents.Fire(VoiceLineAction.PushedButton);
     }
 
     private void OnTriggerExit(Collider other)
