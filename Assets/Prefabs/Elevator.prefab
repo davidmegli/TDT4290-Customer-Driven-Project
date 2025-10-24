@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 6585148887927479236}
   - component: {fileID: 8571445295145768419}
   - component: {fileID: 6830293125228053646}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: VIsuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1025,7 +1025,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 1, z: 0.4}
   m_Center: {x: 0, y: 0, z: -0.4}
 --- !u!1 &6198676737412104220
 GameObject:
