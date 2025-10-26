@@ -52,25 +52,17 @@ public class Elevator : MonoBehaviour
 
     private void OnEnable()
     {
-        UnityEngine.Debug.Log("Enable_1");
         isActive = true;
-        UnityEngine.Debug.Log("Enable_2");
         // reset trigger state
         playerIsInside = false;
-        UnityEngine.Debug.Log("Enable_3");
         if (dwellCoroutine != null)
         {
-            UnityEngine.Debug.Log("Enable_4");
             StopCoroutine(dwellCoroutine);
-            UnityEngine.Debug.Log("Enable_5");
             dwellCoroutine = null;
-            UnityEngine.Debug.Log("Enable_6");
         }
 
         // armed = !requireExitBeforeEnter; // hvis vi ikke krever exit→enter, er den armert ved aktivering
-        UnityEngine.Debug.Log("Enable_7");
         StartCoroutine(ElevatorActivationSequence());
-        UnityEngine.Debug.Log("Enable_8");
     }
 
     private IEnumerator ElevatorActivationSequence()
