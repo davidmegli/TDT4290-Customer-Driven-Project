@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7d6e230d14fcfd4387414ee2f8a5911, type: 3}
+  m_Name: Level1VoiceProfile
+  m_EditorClassIdentifier: Assembly-CSharp::VoiceLineProfile
+  sequence:
+  - action: 4
+    clip: {fileID: 0}
+    channels: 3
+  - action: 0
+    clip: {fileID: 0}
+    channels: 4
+  nonSequenceActions: 02000000
+  nonSequenceClip: {fileID: 8300000, guid: 2008ab764084d93449faf3846edb98d1, type: 3}
+  nonSequenceChannels: 11
