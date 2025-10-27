@@ -19,6 +19,19 @@ public class Elevator : MonoBehaviour
     [SerializeField] private AudioClip elevatorMoveClip;   // “bevegelses”-lyd (loopes under tur)
     [SerializeField] private AudioClip elevatorMusicClip;  // heismusikk (loopes kun inne)
 
+    [Header("Volumes (0..1)")]
+[Range(0f,1f)] [SerializeField] private float plingVolume = 1f;
+[Range(0f,1f)] [SerializeField] private float doorOpenVolume = 1f;
+[Range(0f,1f)] [SerializeField] private float doorCloseVolume = 1f;
+[Range(0f,1f)] [SerializeField] private float elevatorMoveVolume = 1f;   // loop (inne)
+[Range(0f,1f)] [SerializeField] private float elevatorMusicVolume = 1f;  // loop (inne)
+
+// (valgfritt) master per kilde:
+[Header("Master per kilde (0..1)")]
+[Range(0f,1f)] [SerializeField] private float insideMaster = 1f;
+[Range(0f,1f)] [SerializeField] private float outsideMaster = 1f;
+[Range(0f,1f)] [SerializeField] private float doorMaster = 1f;
+
     [Header("Door")]
     [SerializeField] private GameObject door;
     [SerializeField] private float doorSpeed = 3f;
@@ -213,24 +226,20 @@ public class Elevator : MonoBehaviour
     private void PlayPling()
     {
         if (!plingClip) return;
-
-        // pling både inne og ute
-        if (insideSource) insideSource.PlayOneShot(plingClip);
-        if (outsideSource) outsideSource.PlayOneShot(plingClip);
+        if (insideSource)  insideSource.PlayOneShot(plingClip,  plingVolume * insideMaster);
+        if (outsideSource) outsideSource.PlayOneShot(plingClip, plingVolume * outsideMaster);
     }
 
     private void PlayDoorOpen()
     {
-        if (doorSource && doorOpenClip) doorSource.PlayOneShot(doorOpenClip);
+        if (doorSource && doorOpenClip) doorSource.PlayOneShot(doorOpenClip, doorOpenVolume * doorMaster);
         isDoorOpening = true;
-        Debug.Log("PlayDoorOpen");
     }
 
     private void PlayDoorClose()
     {
-        if (doorSource && doorCloseClip) doorSource.PlayOneShot(doorCloseClip);
+        if (doorSource && doorCloseClip) doorSource.PlayOneShot(doorCloseClip, doorCloseVolume * doorMaster);
         isDoorOpening = false;
-        Debug.Log("PlayDoorClose");
     }
 
     // Looper bevegelseslyd under tur (kun inne)
@@ -241,6 +250,7 @@ public class Elevator : MonoBehaviour
         insideSource.Stop();
         insideSource.clip = elevatorMoveClip;
         insideSource.loop = true;
+        insideSource.volume = elevatorMoveVolume * insideMaster; // ← viktig
         insideSource.Play();
     }
 
@@ -262,6 +272,7 @@ public class Elevator : MonoBehaviour
 
         insideSource.clip = elevatorMusicClip;
         insideSource.loop = true;
+        insideSource.volume = elevatorMusicVolume * insideMaster; // ← viktig
         insideSource.Play();
     }
 
