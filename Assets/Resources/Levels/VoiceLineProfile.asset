@@ -10,15 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7d6e230d14fcfd4387414ee2f8a5911, type: 3}
-  m_Name: Level1VoiceProfile
+  m_Name: VoiceLineProfile
   m_EditorClassIdentifier: Assembly-CSharp::VoiceLineProfile
   sequence:
   - action: 1
     clip: {fileID: 8300000, guid: 786fe1aa80b40b64d9a24492390c47be, type: 3}
-    channels: 3
+    channels: -1
   - action: 0
-    clip: {fileID: 8300000, guid: 9d5753a1c2eaeef4780101fde1dfb09d, type: 3}
-    channels: 4
-  nonSequenceActions: 02000000
-  nonSequenceClip: {fileID: 8300000, guid: 2008ab764084d93449faf3846edb98d1, type: 3}
-  nonSequenceChannels: 11
+    clip: {fileID: 8300000, guid: 05f4a93ff45f043859eb711efa1230ae, type: 3}
+    channels: -1
+  - action: 2
+    clip: {fileID: 8300000, guid: 2008ab764084d93449faf3846edb98d1, type: 3}
+    channels: -1
+  - action: 3
+    clip: {fileID: 8300000, guid: 05f4a93ff45f043859eb711efa1230ae, type: 3}
+    channels: -1
+  nonSequenceActions: 
+  nonSequenceClip: {fileID: 0}
+  nonSequenceChannels: -1
