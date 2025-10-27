@@ -483,8 +483,8 @@ MonoBehaviour:
   occlusion: 1
   occlusionInput: 0
   occlusionType: 1
-  occlusionRadius: 1.5
-  occlusionSamples: 80
+  occlusionRadius: 0.7
+  occlusionSamples: 90
   occlusionValue: 1
   transmission: 0
   transmissionType: 0

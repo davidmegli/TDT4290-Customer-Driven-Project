@@ -5,43 +5,75 @@ public class Elevator : MonoBehaviour
 {
     [SerializeField] public float Distance; // ikke brukt lenger, beholdt for minimal diff
 
-    // audio
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip plingClip;
-    [SerializeField] private AudioClip doorOpenClip;
-    [SerializeField] private AudioClip doorCloseClip;
-    [SerializeField] private AudioClip elevatorMoveClip;
-    [SerializeField] private AudioClip elevatorMusicClip;
+    // --- AUDIO SOURCES (nye) ---
+    [Header("Audio Sources")]
+    [SerializeField] private AudioSource insideSource;  // inne i heisen
+    [SerializeField] private AudioSource outsideSource; // utenfor heisen
+    [SerializeField] private AudioSource doorSource;    // på dør-GameObjectet
+
+    // --- CLIPS ---
+    [Header("Clips")]
+    [SerializeField] private AudioClip plingClip;          // pling (spilles inne + ute)
+    [SerializeField] private AudioClip doorOpenClip;       // dør lyd
+    [SerializeField] private AudioClip doorCloseClip;      // dør lyd
+    [SerializeField] private AudioClip elevatorMoveClip;   // “bevegelses”-lyd (loopes under tur)
+    [SerializeField] private AudioClip elevatorMusicClip;  // heismusikk (loopes kun inne)
+
+    [Header("Door")]
     [SerializeField] private GameObject door;
-
+    [SerializeField] private float doorSpeed = 3f;
     private bool isDoorOpening = false;
-    private float doorSpeed = 3;
-    private bool isActive = false;
 
-    // Trigger/dwell
+    // Aktivering / trigger
+    private bool isActive = false;
+    [Header("Trigger/Dwell")]
     [SerializeField] private float requiredStaySeconds = 2f;
     private bool playerIsInside = false;
     private Coroutine dwellCoroutine;
     private Coroutine levelSequenceCoroutine;
 
-    // For å hindre auto-start hvis noe allerede overlapper ved aktivering
+    [Header("Ride duration")]
+    [Tooltip("Standard lengde på heistur om ikke spesifisert utenfra")]
+    [SerializeField] private float defaultRideDuration = 5f;
+    private float currentRideDuration = 0f;
+
+    [Header("Arming")]
     [SerializeField] private bool requireExitBeforeEnter = true;
     private bool armed = true;
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null) audioSource = gameObject.AddComponent<AudioSource>();
+        // Sikre at kilder finnes; ikke opprett nye hvis du vil plassere dem manuelt i prefab
+        if (insideSource == null)
+        {
+            // fallback: prøv å finne en på samme objekt
+            insideSource = GetComponent<AudioSource>();
+            if (insideSource == null) insideSource = gameObject.AddComponent<AudioSource>();
+        }
 
-        audioSource.playOnAwake = false;
-        audioSource.spatialize = true;
-        audioSource.spatialBlend = 1f;
-        audioSource.dopplerLevel = 0f;
-        audioSource.reverbZoneMix = 0f;
+        // Grunnoppsett for 3D-lyd på alle kilder (juster i Inspector etter behov)
+        Setup3DAudio(insideSource);
+        if (outsideSource != null) Setup3DAudio(outsideSource);
+        if (doorSource != null) Setup3DAudio(doorSource);
+
+        // Startverdi for tur-lengde
+        currentRideDuration = defaultRideDuration;
+    }
+
+    private void Setup3DAudio(AudioSource src)
+    {
+        if (!src) return;
+        src.playOnAwake = false;
+        src.spatialize = true;
+        src.spatialBlend = 1f;
+        src.dopplerLevel = 0f;
+        src.reverbZoneMix = 0f;
     }
 
     private void Update()
     {
+        if (!door) return;
+
         var doorPos = door.transform.localPosition;
         door.transform.localPosition = Vector3.Lerp(
             doorPos,
@@ -53,6 +85,7 @@ public class Elevator : MonoBehaviour
     private void OnEnable()
     {
         isActive = true;
+
         // reset trigger state
         playerIsInside = false;
         if (dwellCoroutine != null)
@@ -61,34 +94,33 @@ public class Elevator : MonoBehaviour
             dwellCoroutine = null;
         }
 
-        // armed = !requireExitBeforeEnter; // hvis vi ikke krever exit→enter, er den armert ved aktivering
+        // Om du vil kreve exit før første enter
+        armed = !requireExitBeforeEnter;
+
         StartCoroutine(ElevatorActivationSequence());
     }
 
     private IEnumerator ElevatorActivationSequence()
     {
         if (!isActive) yield break;
-        PlayPling();
+
+        PlayPling(); // pling både inne og ute
         if (plingClip) yield return new WaitForSeconds(plingClip.length);
-        PlayDoorOpen();
+
+        PlayElevatorMusic(); // musikk kun inne (loop)
+        PlayDoorOpen(); // dør-lyd på dørkilden
         if (doorOpenClip) yield return new WaitForSeconds(doorOpenClip.length);
-        PlayElevatorMusic();
+
     }
 
     // --- TRIGGER-LOGIKK ---
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.name);
+        if (!isActive) return;
 
-        if (!isActive)
-        {
-            return;
-        }
         // Ikke start dwell før vi er "armet" (har sett en exit etter aktivering, hvis krevd)
-        if (!armed)
-        {
-            return;
-        }
+        if (!armed) return;
+
         playerIsInside = true;
         if (dwellCoroutine == null)
         {
@@ -100,13 +132,12 @@ public class Elevator : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (!isActive)
-        {
-            return;
-        }
+        if (!isActive) return;
+
         // Første gyldige exit etter aktivering "armer" heisen
         armed = true;
         playerIsInside = false;
+
         if (dwellCoroutine != null)
         {
             StopCoroutine(dwellCoroutine);
@@ -116,91 +147,137 @@ public class Elevator : MonoBehaviour
 
     private IEnumerator DwellThenStart()
     {
-        Debug.Log("DwellThenStart_1");
-
         float t = 0f;
-        // while (t < requiredStaySeconds)
-        // {
-        //     if (!isActive || !playerIsInside) yield break; // avbrutt
-        //     t += Time.deltaTime;
-        //     yield return null;
-        // }
-        yield return new WaitForSeconds(requiredStaySeconds);
-        if (levelSequenceCoroutine == null)
+        while (t < requiredStaySeconds)
         {
-            levelSequenceCoroutine = StartCoroutine(LoadNextLevelSequence());
+            if (!isActive || !playerIsInside) yield break; // avbrutt
+            t += Time.deltaTime;
+            yield return null;
         }
+
+        // Start tur med standard varighet hvis ingen annen er spesifisert
+        StartElevatorRide(defaultRideDuration);
+    }
+
+    /// <summary>
+    /// Kall denne for å starte tur med ønsket varighet (sekunder).
+    /// Kan kalles utenfra (f.eks. fra LevelVoiceController når sekvens fullføres).
+    /// </summary>
+    public void StartElevatorRide(float durationSeconds)
+    {
+        currentRideDuration = Mathf.Max(0f, durationSeconds);
+
+        if (levelSequenceCoroutine == null)
+            levelSequenceCoroutine = StartCoroutine(LoadNextLevelSequence());
     }
 
     private IEnumerator LoadNextLevelSequence()
     {
+        // Lukk dør
         PlayDoorClose();
-        yield return new WaitForSeconds(1.5f);
-        PlayElevatorMove();
-        if (elevatorMoveClip) yield return new WaitForSeconds(elevatorMoveClip.length);
-        StopElevatorMove();
+        if (doorCloseClip) yield return new WaitForSeconds(doorCloseClip.length);
+        else yield return new WaitForSeconds(1.0f);
+
+        // Spill bevegelseslyd (loop) i valgt varighet
+        PlayElevatorMove(); // loop on
+        if (currentRideDuration > 0f)
+            yield return new WaitForSeconds(currentRideDuration);
+
+        StopElevatorMove(); // loop off
+
+        // Bytt level
         LevelManager.StartNextLevel();
+
+        // Ankomst-sekvens
         PlayPling();
-        yield return new WaitForSeconds(1f);
+        if (plingClip) yield return new WaitForSeconds(Mathf.Min(1.0f, plingClip.length));
+        else yield return new WaitForSeconds(1.0f);
+
         PlayDoorOpen();
-        yield return new WaitForSeconds(1.5f);
+        if (doorOpenClip) yield return new WaitForSeconds(doorOpenClip.length);
+        else yield return new WaitForSeconds(1.0f);
+
+        // (valgfritt) lukk etterpå
         PlayDoorClose();
+        if (doorCloseClip) yield return new WaitForSeconds(doorCloseClip.length);
+
         StopElevatorMusic();
+
         gameObject.SetActive(false);
         isActive = false;
         levelSequenceCoroutine = null;
     }
 
     // --- AUDIO HELPERS ---
+
     private void PlayPling()
     {
-        if (plingClip) audioSource.PlayOneShot(plingClip);
+        if (!plingClip) return;
+
+        // pling både inne og ute
+        if (insideSource) insideSource.PlayOneShot(plingClip);
+        if (outsideSource) outsideSource.PlayOneShot(plingClip);
     }
 
     private void PlayDoorOpen()
     {
-        if (doorOpenClip) audioSource.PlayOneShot(doorOpenClip);
+        if (doorSource && doorOpenClip) doorSource.PlayOneShot(doorOpenClip);
         isDoorOpening = true;
         Debug.Log("PlayDoorOpen");
     }
 
     private void PlayDoorClose()
     {
-        if (doorCloseClip) audioSource.PlayOneShot(doorCloseClip);
+        if (doorSource && doorCloseClip) doorSource.PlayOneShot(doorCloseClip);
         isDoorOpening = false;
         Debug.Log("PlayDoorClose");
     }
 
+    // Looper bevegelseslyd under tur (kun inne)
     private void PlayElevatorMove()
     {
-        if (elevatorMoveClip) audioSource.PlayOneShot(elevatorMoveClip);
+        if (!insideSource || !elevatorMoveClip) return;
+
+        insideSource.Stop();
+        insideSource.clip = elevatorMoveClip;
+        insideSource.loop = true;
+        insideSource.Play();
     }
 
     private void StopElevatorMove()
     {
-        if (audioSource.isPlaying)
+        if (!insideSource) return;
+        if (insideSource.clip == elevatorMoveClip)
         {
-            audioSource.Stop();
-            audioSource.loop = false;
+            insideSource.Stop();
+            insideSource.loop = false;
+            insideSource.clip = null;
         }
     }
 
+    // Musikk kun inne
     private void PlayElevatorMusic()
     {
-        if (elevatorMusicClip)
-        {
-            audioSource.clip = elevatorMusicClip;
-            audioSource.loop = true;
-            audioSource.Play();
-        }
+        if (!insideSource || !elevatorMusicClip) return;
+
+        insideSource.clip = elevatorMusicClip;
+        insideSource.loop = true;
+        insideSource.Play();
     }
 
     private void StopElevatorMusic()
     {
-        if (audioSource.isPlaying)
+        if (!insideSource) return;
+
+        if (insideSource.clip == elevatorMusicClip)
         {
-            audioSource.Stop();
-            audioSource.loop = false;
+            insideSource.Stop();
+            insideSource.loop = false;
+            insideSource.clip = null;
+        }
+        else if (insideSource.isPlaying)
+        {
+            // Hvis noe annet spiller (f.eks. moveClip), stopp ikke musikken blindt
         }
     }
 }
