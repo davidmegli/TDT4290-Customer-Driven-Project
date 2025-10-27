@@ -18,33 +18,31 @@ public class LevelVoiceController : MonoBehaviour
     [Header("Scene router (from MainScene)")]
     [SerializeField] private VoiceAudioRouter router;
 
+    [Header("Playback policy")]
+    [Tooltip("Hvis på: stopper alltid alle aktive voice-kilder før nytt klipp starter.")]
+    [SerializeField] private bool stopPreviousOnNext = true;
+
     private int index = 0;
     private bool locked = false;
 
     private void Awake()
     {
-        // Fallback i tilfelle du glemmer å dra inn referansen
         if (!router) router = FindObjectOfType<VoiceAudioRouter>();
     }
 
-    private void OnEnable()
-    {
-        GameEvents.PlayVoiceLine += OnVoiceLine;
-    }
-
-    private void OnDisable()
-    {
-        GameEvents.PlayVoiceLine -= OnVoiceLine;
-    }
+    private void OnEnable()  => GameEvents.PlayVoiceLine += OnVoiceLine;
+    private void OnDisable() => GameEvents.PlayVoiceLine -= OnVoiceLine;
 
     private void OnVoiceLine(VoiceLineAction action)
     {
         if (locked || profile == null || router == null) return;
 
-        // 1) Non-sequence (f.eks. game over)
+        // 1) Non-sequence (kan trigges når som helst)
         if (profile.nonSequenceActions != null &&
             profile.nonSequenceActions.Contains(action))
         {
+            if (stopPreviousOnNext) router.StopAllVoices(); // <-- NYTT
+
             if (profile.nonSequenceClip)
                 router.Play(profile.nonSequenceClip, profile.nonSequenceChannels, sync: true);
             else
@@ -59,8 +57,9 @@ public class LevelVoiceController : MonoBehaviour
         if (profile.sequence == null || index >= profile.sequence.Count) return;
 
         var step = profile.sequence[index];
-
         if (step.action != action) return; // feil rekkefølge -> ignorer
+
+        if (stopPreviousOnNext) router.StopAllVoices(); // <-- NYTT
 
         if (step.clip)
             router.Play(step.clip, step.channels, sync: true);

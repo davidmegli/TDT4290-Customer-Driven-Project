@@ -420,6 +420,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelVoiceController
   profile: {fileID: 11400000, guid: 37dad6487f33dcb49a8b08d61da98cb2, type: 2}
   router: {fileID: 1445379375}
+  stopPreviousOnNext: 1
 --- !u!4 &150828137
 Transform:
   m_ObjectHideFlags: 0
@@ -1736,6 +1737,11 @@ MonoBehaviour:
   sourceB: {fileID: 696002654}
   sourceC: {fileID: 1732149056}
   sourceD: {fileID: 117417065}
+  voiceChannels:
+  - {fileID: 755099767}
+  - {fileID: 696002654}
+  - {fileID: 1732149056}
+  - {fileID: 117417065}
 --- !u!4 &1445379376
 Transform:
   m_ObjectHideFlags: 0
