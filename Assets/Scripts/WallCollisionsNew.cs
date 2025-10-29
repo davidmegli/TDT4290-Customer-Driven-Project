@@ -41,10 +41,10 @@ public class WallCollisionsNew : MonoBehaviour
         audioSource.reverbZoneMix = 0f;   
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnTriggerStay(Collider other)
     {
-        ContactPoint contact = collision.contacts[0];
-        float dist = Vector3.Distance(contact.point, collision.transform.position);
+        Vector3 p = other.bounds.center;
+        float dist = Vector3.Distance(wallCol.ClosestPoint(p), p);
 
         // Latchet: wait to we are outside of the barrier
         if (latched)
@@ -63,7 +63,7 @@ public class WallCollisionsNew : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
         // when we are outside, release latch 
         latched = false;
