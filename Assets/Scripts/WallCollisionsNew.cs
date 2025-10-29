@@ -23,6 +23,9 @@ public class WallCollisionsNew : MonoBehaviour
     private Collider wallCol;
     private float lastPlayTime = -999f;
     private bool latched = false;
+    [Header("Load grace")]
+    [Tooltip("Ignore collision/game-over for this many seconds after a level is loaded.")]
+    public float ignoreAfterLoadSeconds = 0.5f;
 
     void Awake()
     {
@@ -43,6 +46,9 @@ public class WallCollisionsNew : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
+        // Ignore collisions for a short grace period right after a level is instantiated.
+        if (Time.time - LevelManager.lastLoadTime < ignoreAfterLoadSeconds) return;
+
         ContactPoint contact = collision.contacts[0];
         float dist = Vector3.Distance(contact.point, collision.transform.position);
 

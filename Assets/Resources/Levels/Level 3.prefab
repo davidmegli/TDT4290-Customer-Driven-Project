@@ -769,7 +769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8173b2a8dbe2d2d48995bb2ba9a49ff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SteamAudioUnity::SteamAudio.SteamAudioStaticMesh
-  asset: {fileID: 11400000, guid: c20172e638868814d9df0ff476dd1172, type: 2}
+  asset: {fileID: 11400000, guid: e5a762ad0b5bce647867f242691c8b01, type: 2}
   sceneNameWhenExported: Level 3
 --- !u!1 &8029863102570114989
 GameObject:
@@ -786,7 +786,6 @@ GameObject:
   - component: {fileID: 3944999030396652919}
   - component: {fileID: 4415104787742519073}
   - component: {fileID: 1086897598381062927}
-  - component: {fileID: 968313421660062213}
   m_Layer: 9
   m_Name: WallLevel3
   m_TagString: Untagged
@@ -961,19 +960,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &968313421660062213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8029863102570114989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: SteamAudioUnity::SteamAudio.SteamAudioDynamicObject
-  asset: {fileID: 11400000, guid: 31a74323deaf64f46b331875de524e35, type: 2}
 --- !u!1 &8276425797691274748
 GameObject:
   m_ObjectHideFlags: 0
