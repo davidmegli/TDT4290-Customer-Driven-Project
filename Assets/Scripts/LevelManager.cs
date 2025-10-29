@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections;
 using System.Collections.Generic; 
 public class LevelManager : MonoBehaviour
 { 
@@ -7,9 +8,13 @@ public class LevelManager : MonoBehaviour
     // Global event that can be triggered by any level when completed 
     public static event Action OnLevelCompleted;
     [SerializeField] private Elevator elevator;
+    public float delayBeforeActivatingElevator = 5.0f;
+    public float delayBeforeActivatingElevatorFirstLevel = 15.0f;
     private List<GameObject> levels = new List<GameObject>();
     private GameObject currentLevelInstance;
     public static int currentLevelIndex = 0;
+    private bool firstLevel = true;
+
     private void Awake()
     {
         // Singleton pattern for easy global access 
@@ -26,7 +31,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     { 
             // Subscribe to the level-completed event 
-        OnLevelCompleted += LoadNextLevel;
+        OnLevelCompleted += HandleLevelCompleted;
         // Load the first level at startup 
         LoadLevel(0); 
             // added: ensure elevator is set to false after spawning in the first level 
@@ -34,7 +39,12 @@ public class LevelManager : MonoBehaviour
     }
     private void OnDestroy()
     {
-        OnLevelCompleted -= LoadNextLevel;
+        OnLevelCompleted -= HandleLevelCompleted;
+    }
+    
+    private void HandleLevelCompleted()
+    {
+        StartCoroutine(LoadNextLevel());
     }
     /// <summary> /// Loads all level prefabs dynamically from the Resources/Levels folder. /// </summary> 
     private void LoadAllLevels()
@@ -63,12 +73,21 @@ public class LevelManager : MonoBehaviour
         Debug.Log($"🔹 Loaded: {levels[index].name}");
     }
     /// <summary> /// Loads the next level in the list. /// </summary> 
-    public void LoadNextLevel()
+    public IEnumerator LoadNextLevel()
     {
         if (currentLevelInstance != null)
         {
             Destroy(currentLevelInstance);
             Debug.Log("level destroyed");
+        }
+        if (firstLevel)
+        {
+            yield return new WaitForSeconds(delayBeforeActivatingElevatorFirstLevel);
+            firstLevel = false;
+        }
+        else
+        {
+            yield return new WaitForSeconds(delayBeforeActivatingElevator);
         }
         elevator.gameObject.SetActive(true);
     }
