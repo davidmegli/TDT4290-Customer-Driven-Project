@@ -323,8 +323,9 @@ public class Elevator : MonoBehaviour
     // --- NYTT: event-handler for ExitElevator (fra ExitZone) ---
     private void OnVoiceLineAction(VoiceLineAction action)
     {
+        Debug.Log(action);
         if (!waitingForExitToClose) return;                 // bare relevant etter ankomst
         if (action != VoiceLineAction.ExitElevator) return; // kun denne actionen
-        gotExitSignal = true;                               // signal til coroutine
+        gotExitSignal = true;                                // signal til coroutine (FIXED)
     }
 }

@@ -5,6 +5,9 @@ using System.Collections.Generic;
 public class LevelManager : MonoBehaviour
 { 
     public static LevelManager Instance { get; private set; }
+    // Timestamp of the last level load. Other systems can use this to ignore
+    // immediate collisions/spikes that happen right after a level is instantiated.
+    public static float lastLoadTime = -999f;
     // Global event that can be triggered by any level when completed 
     public static event Action OnLevelCompleted;
     [SerializeField] private Elevator elevator;
@@ -70,6 +73,9 @@ public class LevelManager : MonoBehaviour
         // Instantiate the new level at position (0,0,0)
         currentLevelInstance = Instantiate(levels[index], Vector3.zero, Quaternion.identity);
         currentLevelIndex = index;
+        // Record when we finished instantiating the level so other scripts can
+        // temporarily ignore noisy collision events that happen on spawn.
+        lastLoadTime = Time.time;
         Debug.Log($"🔹 Loaded: {levels[index].name}");
     }
     /// <summary> /// Loads the next level in the list. /// </summary> 
