@@ -7,7 +7,9 @@ public enum VoiceLineAction
     PushedButton,
     TouchedWall,
     ExitElevator,
-    EnteredRoom
+    RoomCenterEnter,
+    DoorOpen,
+    NearWall
 }
 
 public static class GameEvents

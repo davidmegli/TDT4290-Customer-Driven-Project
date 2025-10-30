@@ -226,6 +226,7 @@ public class Elevator : MonoBehaviour
         PlayDoorOpen();
         if (doorOpenClip) yield return new WaitForSeconds(doorOpenClip.length);
         else yield return new WaitForSeconds(1.0f);
+        GameEvents.Fire(VoiceLineAction.DoorOpen);
 
         // --- NYTT: hold døra åpen til ExitZone fyrer ExitElevator ---
         waitingForExitToClose = true;
