@@ -89,6 +89,7 @@ public class LevelManager : MonoBehaviour
 
         while (voiceRouter.IsAnyVoicePlaying())
         {
+            Debug.Log("Waiting while talking.......");
             yield return new WaitForSeconds(1.0f);
         }
 

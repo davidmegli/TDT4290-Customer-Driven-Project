@@ -9,7 +9,8 @@ public enum VoiceLineAction
     ExitElevator,
     RoomCenterEnter,
     DoorOpen,
-    NearWall
+    NearWall,
+    NearSecondWall
 }
 
 public static class GameEvents
