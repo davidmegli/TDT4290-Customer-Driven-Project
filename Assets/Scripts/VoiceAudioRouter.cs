@@ -62,4 +62,18 @@ public class VoiceAudioRouter : MonoBehaviour
                 src.Stop();
         }
     }
+
+    public bool IsAnyVoicePlaying()
+    {
+        if (voiceChannels == null) return false;
+        foreach (var src in voiceChannels)
+        {
+            if (src && src.isPlaying)
+                return true;
+        }
+        return false;
+    }
+
 }
+
+

@@ -47,7 +47,7 @@ public class LevelManager : MonoBehaviour
     
     private void HandleLevelCompleted()
     {
-        StartCoroutine(LoadNextLevel());
+        LoadNextLevel();
     }
     /// <summary> /// Loads all level prefabs dynamically from the Resources/Levels folder. /// </summary> 
     private void LoadAllLevels()
@@ -79,24 +79,16 @@ public class LevelManager : MonoBehaviour
         Debug.Log($"🔹 Loaded: {levels[index].name}");
     }
     /// <summary> /// Loads the next level in the list. /// </summary> 
-    public IEnumerator LoadNextLevel()
+    public void LoadNextLevel()
     {
         if (currentLevelInstance != null)
         {
             Destroy(currentLevelInstance);
             Debug.Log("level destroyed");
         }
-        if (firstLevel)
-        {
-            yield return new WaitForSeconds(delayBeforeActivatingElevatorFirstLevel);
-            firstLevel = false;
-        }
-        else
-        {
-            yield return new WaitForSeconds(delayBeforeActivatingElevator);
-        }
         elevator.gameObject.SetActive(true);
     }
+
     public static void StartNextLevel()
     {
         int nextIndex = currentLevelIndex + 1;

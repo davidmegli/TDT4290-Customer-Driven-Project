@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Elevator : MonoBehaviour
 {
+    [SerializeField] private VoiceAudioRouter voiceRouter;
+
     [SerializeField] public float Distance; // ikke brukt lenger, beholdt for minimal diff
 
     // --- AUDIO SOURCES (nye) ---
@@ -210,6 +212,13 @@ public class Elevator : MonoBehaviour
 
         // Spill bevegelseslyd (loop) i valgt varighet
         PlayElevatorMove(); // loop on
+
+        while (voiceRouter.IsAnyVoicePlaying())
+        {
+            yield return new WaitForSeconds(1.0f);
+        }
+        
+        
         if (currentRideDuration > 0f)
             yield return new WaitForSeconds(currentRideDuration);
 
