@@ -7,6 +7,7 @@ public class LevelManager : MonoBehaviour
     public static LevelManager Instance { get; private set; }
     // Timestamp of the last level load. Other systems can use this to ignore
     // immediate collisions/spikes that happen right after a level is instantiated.
+    [SerializeField] private VoiceAudioRouter voiceRouter;
     public static float lastLoadTime = -999f;
     // Global event that can be triggered by any level when completed 
     public static event Action OnLevelCompleted;
@@ -16,7 +17,6 @@ public class LevelManager : MonoBehaviour
     private List<GameObject> levels = new List<GameObject>();
     private GameObject currentLevelInstance;
     public static int currentLevelIndex = 0;
-    private bool firstLevel = true;
 
     private void Awake()
     {
@@ -86,17 +86,15 @@ public class LevelManager : MonoBehaviour
             Destroy(currentLevelInstance);
             Debug.Log("level destroyed");
         }
-        if (firstLevel)
+
+        while (voiceRouter.IsAnyVoicePlaying())
         {
-            yield return new WaitForSeconds(delayBeforeActivatingElevatorFirstLevel);
-            firstLevel = false;
+            yield return new WaitForSeconds(1.0f);
         }
-        else
-        {
-            yield return new WaitForSeconds(delayBeforeActivatingElevator);
-        }
+
         elevator.gameObject.SetActive(true);
     }
+
     public static void StartNextLevel()
     {
         int nextIndex = currentLevelIndex + 1;
