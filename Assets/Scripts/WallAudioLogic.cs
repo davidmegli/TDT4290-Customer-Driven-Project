@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 public class WallAudioLogic : MonoBehaviour
 {
-    [SerializeField] private GameObject spawnButton;
+
     public bool first = false;
     public void FirstTrigger()
     {
@@ -31,7 +31,6 @@ public class WallAudioLogic : MonoBehaviour
         {
             Debug.Log("Second wall!!!!!!!");
             GameEvents.Fire(VoiceLineAction.NearSecondWall);
-            spawnButton.SetActive(true);
         }
     }
 }

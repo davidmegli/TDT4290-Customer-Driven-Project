@@ -25,6 +25,7 @@ public class FirstButton : MonoBehaviour
             LevelManager.LevelCompleted();
         }
         GameEvents.Fire(VoiceLineAction.PushedButton);
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerExit(Collider other)

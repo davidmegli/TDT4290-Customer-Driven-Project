@@ -445,7 +445,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 371137978}
-  - component: {fileID: 371137977}
+  - component: {fileID: 371137979}
   m_Layer: 0
   m_Name: ButtonSpawning
   m_TagString: Untagged
@@ -453,21 +453,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &371137977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 371137976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87f62c3c89590b04b809ec0cc47977b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpawnFirstbutton
-  voiceRouter: {fileID: 1445379375}
-  button: {fileID: 2113685583}
-  spawnButton: {fileID: 0}
 --- !u!4 &371137978
 Transform:
   m_ObjectHideFlags: 0
@@ -483,6 +468,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &371137979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 371137976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03010dd4a37e4cb489ec2159ac1beb2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawningFirstButtonLogic
+  voiceRouter: {fileID: 1445379375}
+  button: {fileID: 2113685582}
 --- !u!1 &390990537
 GameObject:
   m_ObjectHideFlags: 0
