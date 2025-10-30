@@ -430,8 +430,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb6b6deb66bb44a592ca522d755ef48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::wall
-  pointA: {x: -1.4, y: 1, z: 1.5}
-  pointB: {x: -0.1, y: 1, z: 1.5}
+  pointA: {x: -1.4, y: 1, z: 2.5}
+  pointB: {x: -0.1, y: 1, z: 2.5}
   speed: 0.7
   endStopDuration: 1
   scrapingAudioSources:
@@ -620,8 +620,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb6b6deb66bb44a592ca522d755ef48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::wall
-  pointA: {x: -1.4, y: 1, z: 1.5}
-  pointB: {x: -0.1, y: 1, z: 1.5}
+  pointA: {x: -1.4, y: 1, z: 0.8}
+  pointB: {x: -0.1, y: 1, z: 0.8}
   speed: 0.7
   endStopDuration: 1
   scrapingAudioSources:
@@ -1396,8 +1396,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb6b6deb66bb44a592ca522d755ef48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::wall
-  pointA: {x: 1.4, y: 1, z: 1.5}
-  pointB: {x: 0.1, y: 1, z: 1.5}
+  pointA: {x: 1.4, y: 1, z: 0.8}
+  pointB: {x: 0.1, y: 1, z: 0.8}
   speed: 0.7
   endStopDuration: 1
   scrapingAudioSources:
@@ -2679,8 +2679,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb6b6deb66bb44a592ca522d755ef48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::wall
-  pointA: {x: -1.4, y: 1, z: 1.5}
-  pointB: {x: -0.1, y: 1, z: 1.5}
+  pointA: {x: -0.1, y: 1, z: 1.7}
+  pointB: {x: -1.4, y: 1, z: 1.7}
   speed: 0.7
   endStopDuration: 1
   scrapingAudioSources:
