@@ -151,7 +151,7 @@ public class Elevator : MonoBehaviour
         if (!isActive) return;
 
         // Ikke start dwell før vi er "armet" (har sett en exit etter aktivering, hvis krevd)
-        if (!armed) return;
+        // if (!armed) return;
 
         playerIsInside = true;
         if (dwellCoroutine == null)
@@ -162,27 +162,27 @@ public class Elevator : MonoBehaviour
         GameEvents.Fire(VoiceLineAction.EnteredElevator);
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (!isActive) return;
+    // private void OnTriggerExit(Collider other)
+    // {
+    //     if (!isActive) return;
 
-        // Første gyldige exit etter aktivering "armer" heisen
-        armed = true;
-        playerIsInside = false;
+    //     // Første gyldige exit etter aktivering "armer" heisen
+    //     armed = true;
+    //     playerIsInside = false;
 
-        if (dwellCoroutine != null)
-        {
-            StopCoroutine(dwellCoroutine);
-            dwellCoroutine = null;
-        }
-    }
+    //     if (dwellCoroutine != null)
+    //     {
+    //         StopCoroutine(dwellCoroutine);
+    //         dwellCoroutine = null;
+    //     }
+    // }
 
     private IEnumerator DwellThenStart()
     {
         float t = 0f;
         while (t < requiredStaySeconds)
         {
-            if (!isActive || !playerIsInside) yield break; // avbrutt
+            if (!isActive) yield break; // avbrutt
             t += Time.deltaTime;
             yield return null;
         }
