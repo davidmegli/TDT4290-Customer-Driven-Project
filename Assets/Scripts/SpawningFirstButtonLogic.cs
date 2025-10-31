@@ -46,6 +46,7 @@ public class SpawningFirstButtonLogic : MonoBehaviour
         {
             while (voiceRouter.IsAnyVoicePlaying())
             {
+                Debug.Log("Checking the thing");
                 yield return new WaitForSeconds(0.2f);
             }
         }
@@ -54,10 +55,13 @@ public class SpawningFirstButtonLogic : MonoBehaviour
             Debug.LogWarning("[SpawningFirstButtonLogic] voiceRouter er null – viser knapp med en gang.");
         }
 
-        if (button != null) button.SetActive(true);
-
-        // Nullstill så vi kan starte på nytt senere om ønskelig
-        routine = null;
+        if (button != null)
+        {
+            Debug.Log("Activating button");
+            button.SetActive(true);
+        }
+            // Nullstill så vi kan starte på nytt senere om ønskelig
+            routine = null;
     }
 
     // Valgfritt: avbryt om nødvendig

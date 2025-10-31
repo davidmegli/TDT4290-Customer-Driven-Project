@@ -13,7 +13,6 @@ public class FirstButton : MonoBehaviour
     {
         rend = GetComponent<Renderer>();
         rend.material.color = defaultColor;
-        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)

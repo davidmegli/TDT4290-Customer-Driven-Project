@@ -32,7 +32,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 3f1d71f278f0009479c1b6add674ba9a, type: 3}
     channels: 3
   - action: 4
-    clip: {fileID: 8300000, guid: e5ff314d5b5b71641b9b151cfe5cacc5, type: 3}
+    clip: {fileID: 8300000, guid: 837807aae730c35419b4bb56679018ac, type: 3}
     channels: 3
   - action: 1
     clip: {fileID: 8300000, guid: adbf7c0a760aca4418c2e3b3978683bd, type: 3}

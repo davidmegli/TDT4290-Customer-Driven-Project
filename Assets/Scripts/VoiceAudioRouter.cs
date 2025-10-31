@@ -1,7 +1,5 @@
 using UnityEngine;
 using System;
-
-
 public class VoiceAudioRouter : MonoBehaviour
 {
     [Header("Scene-wide Audio Sources (MainScene)")]
@@ -69,7 +67,9 @@ public class VoiceAudioRouter : MonoBehaviour
         foreach (var src in voiceChannels)
         {
             if (src && src.isPlaying)
+            {
                 return true;
+            }
         }
         return false;
     }
