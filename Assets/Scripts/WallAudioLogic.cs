@@ -6,6 +6,7 @@ public class WallAudioLogic : MonoBehaviour
 {
 
     public bool first = false;
+    [SerializeField] private SpawnFirstButton spawnFirstButton;
     public void FirstTrigger()
     {
         first = true;
@@ -31,6 +32,7 @@ public class WallAudioLogic : MonoBehaviour
         {
             Debug.Log("Second wall!!!!!!!");
             GameEvents.Fire(VoiceLineAction.NearSecondWall);
+            spawnFirstButton.ActivateHitbox();
         }
     }
 }

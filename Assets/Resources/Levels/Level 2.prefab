@@ -673,8 +673,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 144e84f883453da47a26a1c5f00c69c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WallAudioLogic
-  spawnButton: {fileID: 0}
   first: 0
+  spawnFirstButton: {fileID: 1496419344668590210}
 --- !u!1 &8971563410129935464
 GameObject:
   m_ObjectHideFlags: 0
@@ -848,6 +848,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64b325397e1ba464fbc32c54634fc012, type: 3}
+--- !u!114 &1496419344668590210 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9000810337795360734, guid: 64b325397e1ba464fbc32c54634fc012, type: 3}
+  m_PrefabInstance: {fileID: 7506678313428600668}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f62c3c89590b04b809ec0cc47977b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnFirstbutton
 --- !u!4 &2056267895082932433 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8404914164966825869, guid: 64b325397e1ba464fbc32c54634fc012, type: 3}
