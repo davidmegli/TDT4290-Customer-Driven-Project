@@ -44,10 +44,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 02951d94f9095354ea26809e8e633122, type: 3}
+  m_Resource: {fileID: 8300000, guid: 837807aae730c35419b4bb56679018ac, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 2
   Loop: 1
   Mute: 0
   Spatialize: 1
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 379e637250e1efb449fff625c809e8ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandTriggeredAudio
-  sourceCollider: {fileID: 0}
+  sourceCollider: {fileID: 4357057383332154699}
   handCollider: {fileID: 0}
   targetTag: RightHandCube
   useDistanceVolume: 1
@@ -366,7 +366,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 674a0c2281893bc468d061b2de703bb7, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 837807aae730c35419b4bb56679018ac, type: 3}
+  m_Resource: {fileID: 8300000, guid: 30563074d807e904e89ea22704b27444, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.674
   m_Pitch: 1
@@ -483,8 +483,8 @@ MonoBehaviour:
   occlusion: 1
   occlusionInput: 0
   occlusionType: 1
-  occlusionRadius: 0.7
-  occlusionSamples: 90
+  occlusionRadius: 0.69
+  occlusionSamples: 74
   occlusionValue: 1
   transmission: 0
   transmissionType: 0
@@ -579,10 +579,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 02951d94f9095354ea26809e8e633122, type: 3}
+  m_Resource: {fileID: 8300000, guid: 837807aae730c35419b4bb56679018ac, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 2
   Loop: 1
   Mute: 0
   Spatialize: 1
@@ -677,7 +677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 379e637250e1efb449fff625c809e8ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandTriggeredAudio
-  sourceCollider: {fileID: 0}
+  sourceCollider: {fileID: 4357057383332154699}
   handCollider: {fileID: 0}
   targetTag: LeftHandCube
   useDistanceVolume: 1

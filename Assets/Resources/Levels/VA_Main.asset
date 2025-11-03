@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VoiceLineProfile
   sequence:
   - action: 4
-    clip: {fileID: 8300000, guid: e9672c8f7d3e00b43a0908c7d33eefb9, type: 3}
+    clip: {fileID: 8300000, guid: 7c9c35f0f3fb88b42a720f3b4ad05c23, type: 3}
     channels: -1
   - action: 0
-    clip: {fileID: 8300000, guid: 2008ab764084d93449faf3846edb98d1, type: 3}
+    clip: {fileID: 8300000, guid: 92cb5c2cf646ed6429b13d311f4e1147, type: 3}
     channels: 4
   - action: 5
     clip: {fileID: 8300000, guid: 00668835805bc1f49bbdffeb1b5d8418, type: 3}
@@ -32,26 +32,44 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 3f1d71f278f0009479c1b6add674ba9a, type: 3}
     channels: 3
   - action: 4
-    clip: {fileID: 8300000, guid: 837807aae730c35419b4bb56679018ac, type: 3}
+    clip: {fileID: 8300000, guid: f6c4fdd96db32ad4ca930e249b62c8a1, type: 3}
     channels: 3
   - action: 1
     clip: {fileID: 8300000, guid: adbf7c0a760aca4418c2e3b3978683bd, type: 3}
     channels: 3
   - action: 5
     clip: {fileID: 8300000, guid: 7afa3427d97beb1438e1db0af59be336, type: 3}
-    channels: 3
+    channels: 8
   - action: 1
     clip: {fileID: 8300000, guid: 9b50bae324fa51046a0cbeaa088aeb3e, type: 3}
     channels: 3
   - action: 5
-    clip: {fileID: 8300000, guid: 90abd5bcdfb82a64c9a3c57dba57d532, type: 3}
-    channels: 3
+    clip: {fileID: 8300000, guid: ae442bbea2fe5eb49b096c173db13ddf, type: 3}
+    channels: 8
   - action: 1
-    clip: {fileID: 8300000, guid: 02951d94f9095354ea26809e8e633122, type: 3}
+    clip: {fileID: 8300000, guid: 99dceb0775696454786331deac8f07c7, type: 3}
     channels: 3
   - action: 5
-    clip: {fileID: 8300000, guid: 02951d94f9095354ea26809e8e633122, type: 3}
+    clip: {fileID: 8300000, guid: b3230c2b7e53ee74fbf17a75b0302755, type: 3}
+    channels: 8
+  - action: 5
+    clip: {fileID: 8300000, guid: 821b7b72a43c25949bef9435defc5b7a, type: 3}
+    channels: 8
+  - action: 1
+    clip: {fileID: 8300000, guid: 5a564860c1cd33a4084075adfdf471e2, type: 3}
     channels: 3
+  - action: 5
+    clip: {fileID: 8300000, guid: ed6c1fcb2cb90a14aafd8c71ced8cbe5, type: 3}
+    channels: 8
+  - action: 1
+    clip: {fileID: 8300000, guid: 786fe1aa80b40b64d9a24492390c47be, type: 3}
+    channels: 0
+  - action: 1
+    clip: {fileID: 8300000, guid: 8a9eee059a3bd4d46a4ed373b5552244, type: 3}
+    channels: 3
+  - action: 5
+    clip: {fileID: 8300000, guid: 584ddc0e1c5c02e4eabbda59e66b99ab, type: 3}
+    channels: 0
   nonSequenceActions: 
   nonSequenceClip: {fileID: 0}
   nonSequenceChannels: -1

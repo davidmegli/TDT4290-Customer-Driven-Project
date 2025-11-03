@@ -727,7 +727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8173b2a8dbe2d2d48995bb2ba9a49ff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SteamAudioUnity::SteamAudio.SteamAudioStaticMesh
-  asset: {fileID: 11400000, guid: 1df5a25f0952f6e47ac71e0b64beee5b, type: 2}
+  asset: {fileID: 11400000, guid: 5edcb66c39cdf6a41b513266cc594ac1, type: 2}
   sceneNameWhenExported: 
 --- !u!1001 &6505761601224694299
 PrefabInstance:

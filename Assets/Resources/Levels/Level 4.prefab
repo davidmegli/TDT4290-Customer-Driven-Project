@@ -42,7 +42,7 @@ AudioSource:
   m_GameObject: {fileID: 1857877787220369576}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 674a0c2281893bc468d061b2de703bb7, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 38907871a71ebb042a763a1b776652ff, type: 3}
   m_PlayOnAwake: 1
@@ -192,7 +192,7 @@ AudioSource:
   m_GameObject: {fileID: 4906118367154911847}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 674a0c2281893bc468d061b2de703bb7, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 6b44f839f762a6f42a1f71652984bb58, type: 3}
   m_PlayOnAwake: 1
@@ -422,11 +422,11 @@ AudioSource:
   m_GameObject: {fileID: 5105850981316911008}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 674a0c2281893bc468d061b2de703bb7, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: e8ee9f547baf4419e9d0f0801ff1b2e8, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.296
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -769,7 +769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8173b2a8dbe2d2d48995bb2ba9a49ff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SteamAudioUnity::SteamAudio.SteamAudioStaticMesh
-  asset: {fileID: 11400000, guid: e5a762ad0b5bce647867f242691c8b01, type: 2}
+  asset: {fileID: 11400000, guid: b3eee106d38e9a84ba550895cad2eac6, type: 2}
   sceneNameWhenExported: Level 3
 --- !u!1 &8029863102570114989
 GameObject:
@@ -933,6 +933,7 @@ MonoBehaviour:
   gameOverDistance: 0.02
   releaseDistance: 0.05
   minRepeatInterval: 1
+  ignoreAfterLoadSeconds: 0.5
 --- !u!54 &1086897598381062927
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1082,11 +1083,11 @@ AudioSource:
   m_GameObject: {fileID: 8276425797691274748}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 674a0c2281893bc468d061b2de703bb7, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: e8ee9f547baf4419e9d0f0801ff1b2e8, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.296
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0

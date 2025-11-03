@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8173b2a8dbe2d2d48995bb2ba9a49ff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SteamAudioUnity::SteamAudio.SteamAudioStaticMesh
-  asset: {fileID: 11400000, guid: 97010239783690d45b65159d6909e683, type: 2}
+  asset: {fileID: 11400000, guid: 6da2e031c2477004baa7b43622766377, type: 2}
   sceneNameWhenExported: Level 2
 --- !u!1 &6626539966309839747
 GameObject:
