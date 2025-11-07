@@ -18,21 +18,21 @@ public class WallSpawner : MonoBehaviour
     {
         if (wallSpawned) return;
 
-        // Position de spawn fixe
+        // Fixed spawn position
         Vector3 spawnPosition = new Vector3(-1.5f, 0f, 1.5f);
 
-        // Pas de rotation
+        // No rotation
         Quaternion spawnRotation = Quaternion.identity;
 
-        // Créer le mur
+        // Create the wall
         currentWall = Instantiate(wallPrefab, spawnPosition, spawnRotation);
 
-        // Configurer le mouvement simple
+        // Configure simple movement
         ConfigureWallMovement(currentWall);
 
         wallSpawned = true;
 
-        Debug.Log($"Mur Level 1 spawné à {spawnPosition}");
+        Debug.Log($"Level 1 wall spawned at {spawnPosition}");
     }
 
     private void ConfigureWallMovement(GameObject wallObject)
@@ -40,15 +40,15 @@ public class WallSpawner : MonoBehaviour
         wall wallScript = wallObject.GetComponent<wall>();
         if (wallScript == null) return;
 
-        // Points fixes : de (-1.5, 0, 1.5) vers (1.5, 0, 1.5)
+        // Fixed points: from (-1.5, 0, 1.5) to (1.5, 0, 1.5)
         wallScript.pointA = new Vector3(-1.5f, 0f, 1.5f);
         wallScript.pointB = new Vector3(1.5f, 0f, 1.5f);
         wallScript.speed = wallSpeed;
 
-        Debug.Log($"Mur configuré: A={wallScript.pointA}, B={wallScript.pointB}, Speed={wallScript.speed}");
+        Debug.Log($"Wall configured: A={wallScript.pointA}, B={wallScript.pointB}, Speed={wallScript.speed}");
     }
 
-    // Méthode pour respawn le mur si il est détruit
+    // Method to respawn the wall if it is destroyed
     public void RespawnWall()
     {
         if (currentWall == null)
@@ -58,7 +58,7 @@ public class WallSpawner : MonoBehaviour
         }
     }
 
-    // Méthode pour détruire le mur actuel
+    // Method to destroy the current wall
     public void DestroyCurrentWall()
     {
         if (currentWall != null)
@@ -66,14 +66,14 @@ public class WallSpawner : MonoBehaviour
             Destroy(currentWall);
             currentWall = null;
             wallSpawned = false;
-            Debug.Log("Mur détruit");
+            Debug.Log("Wall destroyed");
         }
     }
 
     // Debug visualization
     private void OnDrawGizmosSelected()
     {
-        // Afficher le trajet du mur
+        // Display the wall's path
         Gizmos.color = Color.green;
         Vector3 pointA = new Vector3(-1.5f, 0f, 1.5f);
         Vector3 pointB = new Vector3(1.5f, 0f, 1.5f);
