@@ -33,11 +33,11 @@ public class LevelManager : MonoBehaviour
     
     private void Start()
     { 
-            // Subscribe to the level-completed event 
+        // Subscribe to the level-completed event 
         OnLevelCompleted += HandleLevelCompleted;
         // Load the first level at startup 
         LoadLevel(0); 
-            // added: ensure elevator is set to false after spawning in the first level 
+        // Ensure elevator is set to false after spawning in the first level 
         elevator.gameObject.SetActive(false);
     }
     private void OnDestroy()
@@ -62,7 +62,6 @@ public class LevelManager : MonoBehaviour
     {
         if (index < 0 || index >= levels.Count)
         {
-            Debug.Log("🎉 All levels completed!");
             return;
         }
         // Destroy current level if one exists
@@ -76,7 +75,6 @@ public class LevelManager : MonoBehaviour
         // Record when we finished instantiating the level so other scripts can
         // temporarily ignore noisy collision events that happen on spawn.
         lastLoadTime = Time.time;
-        Debug.Log($"🔹 Loaded: {levels[index].name}");
     }
     /// <summary> /// Loads the next level in the list. /// </summary> 
     public IEnumerator LoadNextLevel()
@@ -84,12 +82,10 @@ public class LevelManager : MonoBehaviour
         if (currentLevelInstance != null)
         {
             Destroy(currentLevelInstance);
-            Debug.Log("level destroyed");
         }
 
         while (voiceRouter.IsAnyVoicePlaying())
         {
-            Debug.Log("Waiting while talking.......");
             yield return new WaitForSeconds(1.0f);
         }
 
@@ -99,7 +95,6 @@ public class LevelManager : MonoBehaviour
     public static void StartNextLevel()
     {
         int nextIndex = currentLevelIndex + 1;
-        // Instance.elevator.gameObject.SetActive(true);
         Instance.LoadLevel(nextIndex);
     }
     /// <summary> /// Static helper method for levels to notify completion. /// Can be called from any script inside a level. /// </summary> 

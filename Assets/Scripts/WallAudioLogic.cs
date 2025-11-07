@@ -21,7 +21,6 @@ public class WallAudioLogic : MonoBehaviour
     {
         if (!first)
         {
-            Debug.Log("First Wall!!!!");
             GameEvents.Fire(VoiceLineAction.NearWall);
             if (!first) yield return new WaitForSeconds(2f);
             FirstTrigger();
@@ -30,7 +29,6 @@ public class WallAudioLogic : MonoBehaviour
 
         if (first)
         {
-            Debug.Log("Second wall!!!!!!!");
             GameEvents.Fire(VoiceLineAction.NearSecondWall);
             spawnFirstButton.ActivateHitbox();
         }

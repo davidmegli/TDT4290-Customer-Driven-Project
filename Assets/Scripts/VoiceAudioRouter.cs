@@ -9,11 +9,11 @@ public class VoiceAudioRouter : MonoBehaviour
     [SerializeField] public AudioSource sourceD;
 
     [Header("All voice channels (for StopAllVoices)")]
-    [Tooltip("List opp ALLE audio sources som skal brukes til voice lines")]
+    [Tooltip("List all audio sources to be used for voice lines")]
     [SerializeField] private AudioSource[] voiceChannels;
 
     /// <summary>
-    /// Spill av et klipp på en eller flere kanaler.
+    /// Play a clip on one or more channels.
     /// </summary>
     public void Play(AudioClip clip, AudioChannel channels, bool sync = true, double leadSeconds = 0.05)
     {
@@ -21,7 +21,7 @@ public class VoiceAudioRouter : MonoBehaviour
 
         if (sync)
         {
-            // sample-presis synk av flere kilder
+            // sample-precise sync of multiple sources
             double t = AudioSettings.dspTime + leadSeconds;
             if (channels.HasFlag(AudioChannel.A)) { PrepareAndSchedule(sourceA, clip, t); }
             if (channels.HasFlag(AudioChannel.B)) { PrepareAndSchedule(sourceB, clip, t); }
@@ -30,7 +30,7 @@ public class VoiceAudioRouter : MonoBehaviour
         }
         else
         {
-            // fallback PlayOneShot (ikke synk)
+            // fallback PlayOneShot (don't sync)
             if (channels.HasFlag(AudioChannel.A) && sourceA) sourceA.PlayOneShot(clip);
             if (channels.HasFlag(AudioChannel.B) && sourceB) sourceB.PlayOneShot(clip);
             if (channels.HasFlag(AudioChannel.C) && sourceC) sourceC.PlayOneShot(clip);
@@ -47,8 +47,8 @@ public class VoiceAudioRouter : MonoBehaviour
     }
 
     /// <summary>
-    /// Sørger for at ingen voice-klipp kan overlappe.
-    /// Stopper ALT som spiller via routeren.
+    /// Ensures that no voice clips can overlap.
+    /// Stops EVERYTHING playing through the router.
     /// </summary>
     public void StopAllVoices()
     {

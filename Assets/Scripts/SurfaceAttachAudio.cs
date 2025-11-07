@@ -2,9 +2,9 @@
 using UnityEngine;
 public class SurfaceAttachAudio : MonoBehaviour
 {
-    [Tooltip("BoxCollider til kuben lyden skal 'komme fra'")]
+    [Tooltip("BoxCollider to the cube the sound should 'come from'")]
     public BoxCollider sourceCollider;
-    [Tooltip("Transform med AudioListener (ofte Main Camera). Tomt = Camera.main")]
+    [Tooltip("Transform with AudioListener (often Main Camera). Empty = Camera.main")]
     public Transform listener;
 
     [Tooltip("On/off dynamic volume based on distance")]
@@ -41,7 +41,7 @@ public class SurfaceAttachAudio : MonoBehaviour
     }
     void Start()
     {
-        // Prøv igjen i Start i tilfelle hierarkiet ble satt opp etterpå
+        // Try again in Start in case the hierarchy was set up afterwards
         if (!listener && Camera.main) listener = Camera.main.transform;
         if (!sourceCollider)
         {
@@ -49,12 +49,6 @@ public class SurfaceAttachAudio : MonoBehaviour
             if (inParent) sourceCollider = inParent;
         }
         if (!_audio) TryGetComponent(out _audio);
-        if (!sourceCollider)
-            Debug.LogWarning($"{name}: SurfaceAttachAudio mangler SourceCollider. Dra inn kubens BoxCollider i Inspector.");
-        if (!listener)
-            Debug.LogWarning($"{name}: SurfaceAttachAudio mangler Listener. Dra inn kameraet eller sett Camera.main-tag.");
-        if (!_audio && useDistanceVolume)
-            Debug.LogWarning($"{name}: SurfaceAttachAudio found no AudioSource on the same GameObject");
     }
     void LateUpdate()
     {

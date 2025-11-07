@@ -56,7 +56,6 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!loggedMissingTarget)
             {
-                Debug.LogWarning("PlayerMovement: No follow target assigned. Falling back to manual input.", this);
                 loggedMissingTarget = true;
             }
 

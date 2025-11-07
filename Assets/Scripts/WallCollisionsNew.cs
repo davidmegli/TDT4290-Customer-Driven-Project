@@ -30,11 +30,6 @@ public class WallCollisionsNew : MonoBehaviour
     void Awake()
     {
         wallCol = GetComponent<Collider>();
-        if (!wallCol.isTrigger)
-        {
-            Debug.LogWarning("[WallCollisions] sets veg-collider to Is-Trigger = true, for VR-touching without physical pressing it.");
-        }
-
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null) audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
@@ -59,13 +54,12 @@ public class WallCollisionsNew : MonoBehaviour
             return;
         }
 
-        // Not latchet: triggers when we are tight enough on the OG cooldown is over. 
+        // Not latchet: triggers when we are tight enough on the OG cooldown is over.
         if (dist <= gameOverDistance && Time.time - lastPlayTime >= minRepeatInterval)
         {
             PlayCollisionSound();
             lastPlayTime = Time.time;
             latched = true; // dont spam in OnCollisionStay
-            Debug.Log($"[WallCollisions] GAME OVER (dist={dist:F3} m)");
         }
     }
 
@@ -86,7 +80,5 @@ public class WallCollisionsNew : MonoBehaviour
     {
         if (collisionSound != null)
             audioSource.PlayOneShot(collisionSound);
-        else
-            Debug.LogWarning("[WallCollisions] Ingen collisionSound satt i Inspector!");
     }
 }

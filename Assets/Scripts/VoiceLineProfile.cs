@@ -8,16 +8,16 @@ public class VoiceLineProfile : ScriptableObject
     [Serializable]
     public class SequenceStep
     {
-        public VoiceLineAction action;                    // Hvilken handling må skje
-        public AudioClip clip;                            // Hvilket klipp skal spilles
-        public AudioChannel channels = AudioChannel.A;    // Hvilke av A–D skal spille (kan kombineres)
+        public VoiceLineAction action;                    // What action must be taken
+        public AudioClip clip;                            // Which clip should be played
+        public AudioChannel channels = AudioChannel.A;    // Which of A–D should play (can be combined)
     }
 
     [Header("Action Sequence")]
     public List<SequenceStep> sequence = new();
 
     [Header("Non Sequence Actions (e.g., Game Over)")]
-    public List<VoiceLineAction> nonSequenceActions = new(); // typisk bare TouchedWall
-    public AudioClip nonSequenceClip;                         // game over-klipp
+    public List<VoiceLineAction> nonSequenceActions = new(); // typically just TouchedWall
+    public AudioClip nonSequenceClip;                         // game over clip
     public AudioChannel nonSequenceChannels = AudioChannel.All;
 }

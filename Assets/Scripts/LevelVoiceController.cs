@@ -19,7 +19,7 @@ public class LevelVoiceController : MonoBehaviour
     [SerializeField] private VoiceAudioRouter router;
 
     [Header("Playback policy")]
-    [Tooltip("Hvis på: stopper alltid alle aktive voice-kilder før nytt klipp starter.")]
+    [Tooltip("If on: always stops all active voice sources before new clip starts.")]
     [SerializeField] private bool stopPreviousOnNext = true;
 
     private int index = 0;
@@ -37,34 +37,30 @@ public class LevelVoiceController : MonoBehaviour
     {
         if (locked || profile == null || router == null) return;
 
-        // 1) Non-sequence (kan trigges når som helst)
+        // 1) Non-sequence (can be triggered at any time)
         if (profile.nonSequenceActions != null &&
             profile.nonSequenceActions.Contains(action))
         {
-            if (stopPreviousOnNext) router.StopAllVoices(); // <-- NYTT
+            if (stopPreviousOnNext) router.StopAllVoices();
 
             if (profile.nonSequenceClip)
                 router.Play(profile.nonSequenceClip, profile.nonSequenceChannels, sync: true);
-            else
-                Debug.LogWarning("[LevelVoiceController] Non-sequence triggered, but clip is missing.", this);
 
             locked = true;
             VoiceFlowEvents.RaiseNonSequenceTriggered();
             return;
         }
 
-        // 2) Sekvenslogikk
+        // 2) Sequential logic
         if (profile.sequence == null || index >= profile.sequence.Count) return;
 
         var step = profile.sequence[index];
-        if (step.action != action) return; // feil rekkefølge -> ignorer
+        if (step.action != action) return; // wrong order -> ignore
 
-        if (stopPreviousOnNext) router.StopAllVoices(); // <-- NYTT
+        if (stopPreviousOnNext) router.StopAllVoices();
 
         if (step.clip)
             router.Play(step.clip, step.channels, sync: true);
-        else
-            Debug.LogWarning($"[LevelVoiceController] Sequence step {index} has no clip.", this);
 
         index++;
 
