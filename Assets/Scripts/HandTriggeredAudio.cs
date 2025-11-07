@@ -2,7 +2,7 @@
 using UnityEngine;
 public class HandTriggeredAudio : MonoBehaviour
 {
-    [Tooltip("BoxCollider til kuben lyden skal 'komme fra'")]
+    [Tooltip("BoxCollider of the cube the sound should 'come from'")]
     public BoxCollider sourceCollider;
     [Tooltip("Left or Right hand Cube object")]
     public BoxCollider handCollider;
@@ -49,7 +49,7 @@ public class HandTriggeredAudio : MonoBehaviour
     }
     void Start()
     {
-        // Prøv igjen i Start i tilfelle hierarkiet ble satt opp etterpå
+        // Try again in Start in case the hierarchy was set up afterwards
         if (!sourceCollider)
         {
             var inParent = GetComponentInParent<BoxCollider>();
@@ -62,7 +62,7 @@ public class HandTriggeredAudio : MonoBehaviour
         }
         if (!_audio) TryGetComponent(out _audio);
         if (!sourceCollider)
-            Debug.LogWarning($"{name}: SurfaceAttachAudio mangler SourceCollider. Dra inn kubens BoxCollider i Inspector.");
+            Debug.LogWarning($"{name}: SurfaceAttachAudio missing SourceCollider. Drag the cube's BoxCollider in Inspector.");
         if (!_audio && useDistanceVolume)
             Debug.LogWarning($"{name}: SurfaceAttachAudio found no AudioSource on the same GameObject");
     }

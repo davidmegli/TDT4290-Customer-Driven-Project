@@ -5,41 +5,41 @@ public class Elevator : MonoBehaviour
 {
     [SerializeField] private VoiceAudioRouter voiceRouter;
 
-    [SerializeField] public float Distance; // ikke brukt lenger, beholdt for minimal diff
+    [SerializeField] public float Distance; // no longer used, kept for minimal diff
 
-    // --- AUDIO SOURCES (nye) ---
+    // --- AUDIO SOURCES (new) ---
     [Header("Audio Sources")]
-    [SerializeField] private AudioSource insideSource;  // inne i heisen
-    [SerializeField] private AudioSource outsideSource; // utenfor heisen
-    [SerializeField] private AudioSource doorSource;    // på dør-GameObjectet
+    [SerializeField] private AudioSource insideSource;  // inside the elevator
+    [SerializeField] private AudioSource outsideSource; // outside the elevator
+    [SerializeField] private AudioSource doorSource;    // on door GameObject
 
     // --- CLIPS ---
     [Header("Clips")]
-    [SerializeField] private AudioClip plingClip;          // pling (spilles inne + ute)
-    [SerializeField] private AudioClip doorOpenClip;       // dør lyd
-    [SerializeField] private AudioClip doorCloseClip;      // dør lyd
-    [SerializeField] private AudioClip elevatorMoveClip;   // “bevegelses”-lyd (loopes under tur)
-    [SerializeField] private AudioClip elevatorMusicClip;  // heismusikk (loopes kun inne)
+    [SerializeField] private AudioClip plingClip;          // pling sound (plays inside + outside)
+    [SerializeField] private AudioClip doorOpenClip;       // door sound
+    [SerializeField] private AudioClip doorCloseClip;      // door sound
+    [SerializeField] private AudioClip elevatorMoveClip;   // movement sound (loops during ride)
+    [SerializeField] private AudioClip elevatorMusicClip;  // elevator music (loops inside only)
 
     [Header("Volumes (0..1)")]
-    [Range(0f,1f)] [SerializeField] private float plingVolume = 1f;
-    [Range(0f,1f)] [SerializeField] private float doorOpenVolume = 1f;
-    [Range(0f,1f)] [SerializeField] private float doorCloseVolume = 1f;
-    [Range(0f,1f)] [SerializeField] private float elevatorMoveVolume = 1f;   // loop (inne)
-    [Range(0f,1f)] [SerializeField] private float elevatorMusicVolume = 1f;  // loop (inne)
+    [Range(0f, 1f)][SerializeField] private float plingVolume = 1f;
+    [Range(0f, 1f)][SerializeField] private float doorOpenVolume = 1f;
+    [Range(0f, 1f)][SerializeField] private float doorCloseVolume = 1f;
+    [Range(0f, 1f)][SerializeField] private float elevatorMoveVolume = 1f;   // loop (inside)
+    [Range(0f, 1f)][SerializeField] private float elevatorMusicVolume = 1f;  // loop (inside)
 
-    // (valgfritt) master per kilde:
-    [Header("Master per kilde (0..1)")]
-    [Range(0f,1f)] [SerializeField] private float insideMaster = 1f;
-    [Range(0f,1f)] [SerializeField] private float outsideMaster = 1f;
-    [Range(0f,1f)] [SerializeField] private float doorMaster = 1f;
+    // (optional) master per source:
+    [Header("Master per source (0..1)")]
+    [Range(0f, 1f)][SerializeField] private float insideMaster = 1f;
+    [Range(0f, 1f)][SerializeField] private float outsideMaster = 1f;
+    [Range(0f, 1f)][SerializeField] private float doorMaster = 1f;
 
     [Header("Door")]
     [SerializeField] private GameObject door;
     [SerializeField] private float doorSpeed = 3f;
     private bool isDoorOpening = false;
 
-    // Aktivering / trigger
+    // Activation / trigger
     private bool isActive = false;
     [Header("Trigger/Dwell")]
     [SerializeField] private float requiredStaySeconds = 2f;
@@ -48,7 +48,7 @@ public class Elevator : MonoBehaviour
     private Coroutine levelSequenceCoroutine;
 
     [Header("Ride duration")]
-    [Tooltip("Standard lengde på heistur om ikke spesifisert utenfra")]
+    [Tooltip("Standard duration of elevator ride if not specified externally")]
     [SerializeField] private float defaultRideDuration = 5f;
     private float currentRideDuration = 0f;
 
@@ -56,26 +56,26 @@ public class Elevator : MonoBehaviour
     [SerializeField] private bool requireExitBeforeEnter = true;
     private bool armed = true;
 
-    // --- NYTT: vent-på-exit-state ---
+    // --- NEW: wait-for-exit state ---
     private bool waitingForExitToClose = false;
     private bool gotExitSignal = false;
 
     private void Awake()
     {
-        // Sikre at kilder finnes; ikke opprett nye hvis du vil plassere dem manuelt i prefab
+        // Ensure sources exist; don't create new ones if you want to place them manually in prefab
         if (insideSource == null)
         {
-            // fallback: prøv å finne en på samme objekt
+            // fallback: try to find one on the same object
             insideSource = GetComponent<AudioSource>();
             if (insideSource == null) insideSource = gameObject.AddComponent<AudioSource>();
         }
 
-        // Grunnoppsett for 3D-lyd på alle kilder (juster i Inspector etter behov)
+        // Basic setup for 3D audio on all sources (adjust in Inspector as needed)
         Setup3DAudio(insideSource);
         if (outsideSource != null) Setup3DAudio(outsideSource);
         if (doorSource != null) Setup3DAudio(doorSource);
 
-        // Startverdi for tur-lengde
+        // Starting value for ride duration
         currentRideDuration = defaultRideDuration;
     }
 
@@ -113,10 +113,10 @@ public class Elevator : MonoBehaviour
             dwellCoroutine = null;
         }
 
-        // Om du vil kreve exit før første enter
+        // If you want to require exit before first enter
         armed = !requireExitBeforeEnter;
 
-        // NYTT: lytt på global voice-line actions (for ExitElevator)
+        // NEW: listen to global voice-line actions (for ExitElevator)
         GameEvents.PlayVoiceLine += OnVoiceLineAction;
 
         waitingForExitToClose = false;
@@ -127,7 +127,7 @@ public class Elevator : MonoBehaviour
 
     private void OnDisable()
     {
-        // NYTT: rydd abonnement og state
+        // NEW: clean up subscription and state
         GameEvents.PlayVoiceLine -= OnVoiceLineAction;
         waitingForExitToClose = false;
         gotExitSignal = false;
@@ -137,20 +137,20 @@ public class Elevator : MonoBehaviour
     {
         if (!isActive) yield break;
 
-        PlayPling(); // pling både inne og ute
+        PlayPling(); // pling both inside and outside
         if (plingClip) yield return new WaitForSeconds(plingClip.length);
 
-        PlayElevatorMusic(); // musikk kun inne (loop)
-        PlayDoorOpen(); // dør-lyd på dørkilden
+        PlayElevatorMusic(); // music inside only (loop)
+        PlayDoorOpen(); // door sound on door source
         if (doorOpenClip) yield return new WaitForSeconds(doorOpenClip.length);
     }
 
-    // --- TRIGGER-LOGIKK ---
+    // --- TRIGGER LOGIC ---
     private void OnTriggerEnter(Collider other)
     {
         if (!isActive) return;
 
-        // Ikke start dwell før vi er "armet" (har sett en exit etter aktivering, hvis krevd)
+        // Don't start dwell until we are "armed" (have seen an exit after activation, if required)
         // if (!armed) return;
 
         playerIsInside = true;
@@ -166,7 +166,7 @@ public class Elevator : MonoBehaviour
     // {
     //     if (!isActive) return;
 
-    //     // Første gyldige exit etter aktivering "armer" heisen
+    //     // First valid exit after activation "arms" the elevator
     //     armed = true;
     //     playerIsInside = false;
 
@@ -182,18 +182,18 @@ public class Elevator : MonoBehaviour
         float t = 0f;
         while (t < requiredStaySeconds)
         {
-            if (!isActive) yield break; // avbrutt
+            if (!isActive) yield break; // interrupted
             t += Time.deltaTime;
             yield return null;
         }
 
-        // Start tur med standard varighet hvis ingen annen er spesifisert
+        // Start ride with default duration if no other is specified
         StartElevatorRide(defaultRideDuration);
     }
 
     /// <summary>
-    /// Kall denne for å starte tur med ønsket varighet (sekunder).
-    /// Kan kalles utenfra (f.eks. fra LevelVoiceController når sekvens fullføres).
+    /// Call this to start ride with desired duration (seconds).
+    /// Can be called externally (e.g. from LevelVoiceController when sequence completes).
     /// </summary>
     public void StartElevatorRide(float durationSeconds)
     {
@@ -205,29 +205,29 @@ public class Elevator : MonoBehaviour
 
     private IEnumerator LoadNextLevelSequence()
     {
-        // Lukk dør
+        // Close door
         PlayDoorClose();
         if (doorCloseClip) yield return new WaitForSeconds(doorCloseClip.length);
         else yield return new WaitForSeconds(1.0f);
 
-        // Spill bevegelseslyd (loop) i valgt varighet
+        // Play movement sound (loop) for chosen duration
         PlayElevatorMove(); // loop on
 
         while (voiceRouter.IsAnyVoicePlaying())
         {
             yield return new WaitForSeconds(1.0f);
         }
-        
-        
+
+
         if (currentRideDuration > 0f)
             yield return new WaitForSeconds(currentRideDuration);
 
         StopElevatorMove(); // loop off
 
-        // Bytt level
+        // Switch level
         LevelManager.StartNextLevel();
 
-        // Ankomst-sekvens
+        // Arrival sequence
         PlayPling();
         if (plingClip) yield return new WaitForSeconds(Mathf.Min(1.0f, plingClip.length));
         else yield return new WaitForSeconds(1.0f);
@@ -237,14 +237,14 @@ public class Elevator : MonoBehaviour
         else yield return new WaitForSeconds(1.0f);
         GameEvents.Fire(VoiceLineAction.DoorOpen);
 
-        // --- NYTT: hold døra åpen til ExitZone fyrer ExitElevator ---
+        // --- NEW: keep door open until ExitZone fires ExitElevator ---
         waitingForExitToClose = true;
         gotExitSignal = false;
 
-        // Vent til vi får signalet (fra ElevatorExitZone via GameEvents.Fire(ExitElevator))
+        // Wait until we get the signal (from ElevatorExitZone via GameEvents.Fire(ExitElevator))
         yield return new WaitUntil(() => gotExitSignal);
 
-        // Nå kan vi lukke døra
+        // Now we can close the door
         PlayDoorClose();
         if (doorCloseClip) yield return new WaitForSeconds(doorCloseClip.length);
 
@@ -254,7 +254,7 @@ public class Elevator : MonoBehaviour
         isActive = false;
         levelSequenceCoroutine = null;
 
-        // rydd state
+        // clean up state
         waitingForExitToClose = false;
         gotExitSignal = false;
     }
@@ -264,7 +264,7 @@ public class Elevator : MonoBehaviour
     private void PlayPling()
     {
         if (!plingClip) return;
-        if (insideSource)  insideSource.PlayOneShot(plingClip,  plingVolume * insideMaster);
+        if (insideSource) insideSource.PlayOneShot(plingClip, plingVolume * insideMaster);
         if (outsideSource) outsideSource.PlayOneShot(plingClip, plingVolume * outsideMaster);
     }
 
@@ -280,7 +280,7 @@ public class Elevator : MonoBehaviour
         isDoorOpening = false;
     }
 
-    // Looper bevegelseslyd under tur (kun inne)
+    // Loops movement sound during ride (inside only)
     private void PlayElevatorMove()
     {
         if (!insideSource || !elevatorMoveClip) return;
@@ -288,7 +288,7 @@ public class Elevator : MonoBehaviour
         insideSource.Stop();
         insideSource.clip = elevatorMoveClip;
         insideSource.loop = true;
-        insideSource.volume = elevatorMoveVolume * insideMaster; // ← viktig
+        insideSource.volume = elevatorMoveVolume * insideMaster; // ← important
         insideSource.Play();
     }
 
@@ -303,14 +303,14 @@ public class Elevator : MonoBehaviour
         }
     }
 
-    // Musikk kun inne
+    // Music inside only
     private void PlayElevatorMusic()
     {
         if (!insideSource || !elevatorMusicClip) return;
 
         insideSource.clip = elevatorMusicClip;
         insideSource.loop = true;
-        insideSource.volume = elevatorMusicVolume * insideMaster; // ← viktig
+        insideSource.volume = elevatorMusicVolume * insideMaster; // ← important
         insideSource.Play();
     }
 
@@ -326,16 +326,16 @@ public class Elevator : MonoBehaviour
         }
         else if (insideSource.isPlaying)
         {
-            // Hvis noe annet spiller (f.eks. moveClip), stopp ikke musikken blindt
+            // If something else is playing (e.g. moveClip), don't stop music blindly
         }
     }
 
-    // --- NYTT: event-handler for ExitElevator (fra ExitZone) ---
+    // --- NEW: event handler for ExitElevator (from ExitZone) ---
     private void OnVoiceLineAction(VoiceLineAction action)
     {
         Debug.Log(action);
-        if (!waitingForExitToClose) return;                 // bare relevant etter ankomst
-        if (action != VoiceLineAction.ExitElevator) return; // kun denne actionen
-        gotExitSignal = true;                                // signal til coroutine (FIXED)
+        if (!waitingForExitToClose) return;                 // only relevant after arrival
+        if (action != VoiceLineAction.ExitElevator) return; // only this action
+        gotExitSignal = true;                                // signal to coroutine (FIXED)
     }
 }
