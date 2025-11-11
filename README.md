@@ -1,10 +1,10 @@
-# TDT4290 Customer Driven Project - VR Training Application
+# TDT4290 Customer Driven Project - VR Application
 
-A Unity-based Virtual Reality training application developed for TDT4290 Customer Driven Project course. This project implements a multi-level VR experience with dynamic audio systems, wall mechanics, and elevator navigation.
+A Unity-based Virtual Reality application developed for TDT4290 Customer Driven Project course. This project implements a multi-level VR experience with dynamic audio systems, wall mechanics, and elevator navigation.
 
 ## 🎯 Project Overview
 
-This VR application provides an immersive training environment where users navigate through multiple levels, interact with moving walls, and experience spatial audio feedback. The project focuses on providing realistic audio cues and haptic feedback for training scenarios.
+This VR application provides an immersive environment where users navigate through multiple levels, interact with moving walls, and experience spatial audio feedback. The project focuses on providing realistic audio cues and haptic feedback for scenarios.
 
 ## 🛠️ Technical Stack
 
@@ -20,11 +20,6 @@ This VR application provides an immersive training environment where users navig
 - **Unity XR Interaction Toolkit (3.2.1)** - Cross-platform VR interaction system
 - **Unity XR Management (4.5.1)** - XR provider management
 - **Unity XR OpenXR (1.15.1)** - OpenXR standard support
-
-#### AI & Workflow
-- **Unity AI Assistant (1.0.0-pre.8)** - AI-powered development assistance
-- **Unity AI Generators (1.0.0-pre.15)** - AI content generation tools
-- **Unity AI Inference (2.2.1)** - Machine learning inference
 
 #### Core Systems
 - **Unity Input System (1.14.2)** - Modern input handling
@@ -103,7 +98,6 @@ Assets/
 - **Multi-Channel Audio Routing** - Separate audio channels for different game elements
 
 ### Audio Components
-- **Background Music System** - Ambient background tracks
 - **Voice Guidance System** - Contextual voice instructions
 - **Interactive Audio Feedback** - Real-time audio responses to user actions
 - **Wall Proximity Audio** - Audio intensity increases near moving walls
@@ -161,7 +155,7 @@ Assets/
 3. **Level 2** - Intermediate challenges with faster walls (Resources/Levels/Level 2.prefab)
 4. **Level 3** - Advanced patterns and multiple walls (Resources/Levels/Level 3.prefab)
 5. **Level 4** - Expert level with complex wall movements (Resources/Levels/Level 4.prefab)
-6. **Level 5** - Advanced training scenarios (Resources/Levels/Level 5.prefab)
+6. **Level 5** - Advanced scenarios (Resources/Levels/Level 5.prefab)
 7. **Level 6** - Master level with maximum difficulty (Resources/Levels/Level 6.prefab)
 
 ### Core Mechanics
@@ -214,7 +208,7 @@ Assets/
 ### Future Improvements
 - **Cross-Platform VR Support** - Expand to other VR platforms
 - **Advanced Haptic Feedback** - Enhanced tactile responses
-- **Multiplayer Support** - Multi-user training scenarios
+- **Multiplayer Support** - Multi-user scenarios
 - **Analytics Integration** - Performance tracking and metrics
 
 ## 🤝 Contributing
@@ -241,7 +235,7 @@ This project is developed for educational purposes as part of the TDT4290 Custom
 
 ## 👥 Team
 
-**TDT4290 Development Team**
+**TDT4290 Students Team**
 - Customer-driven development approach
 - Agile development methodology
 - Continuous integration and testing
