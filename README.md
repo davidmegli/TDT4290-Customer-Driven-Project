@@ -9,7 +9,7 @@ This VR application provides an immersive environment where users navigate throu
 ## 🛠️ Technical Stack
 
 ### Unity Version
-- **Unity 2023.3.x** (or later)
+- **Unity 6000.2.3f1**
 - **Universal Render Pipeline (URP) 17.2.0**
 
 ### Core Dependencies
@@ -105,7 +105,7 @@ Assets/
 ## 🚀 Getting Started
 
 ### Prerequisites
-1. **Unity 2023.3.x** or later
+1. **Unity 6000.2.3f1**
 2. **Meta Quest 2/3** or compatible VR headset
 3. **Meta XR SDK** support
 4. **Windows 10/11** or **macOS** development environment
