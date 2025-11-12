@@ -2,9 +2,16 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ScriptableObject that defines a profile for voice lines, including action sequences and non-sequence actions.
+/// Used to configure which audio clips and channels are triggered for specific game events.
+/// </summary>
 [CreateAssetMenu(menuName = "Voice Lines/Voice Line Profile", fileName = "VoiceLineProfile")]
 public class VoiceLineProfile : ScriptableObject
 {
+    /// <summary>
+    /// Represents a single step in a voice line sequence, specifying the action, audio clip, and channels to play.
+    /// </summary>
     [Serializable]
     public class SequenceStep
     {

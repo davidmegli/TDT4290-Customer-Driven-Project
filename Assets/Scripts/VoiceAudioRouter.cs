@@ -1,5 +1,9 @@
 using UnityEngine;
 using System;
+/// <summary>
+/// Routes and manages playback of voice audio clips across multiple channels in the scene.
+/// Provides synchronized and unsynchronized playback, and ensures no overlapping voice clips.
+/// </summary>
 public class VoiceAudioRouter : MonoBehaviour
 {
     [Header("Scene-wide Audio Sources (MainScene)")]

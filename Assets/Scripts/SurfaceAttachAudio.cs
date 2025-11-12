@@ -1,5 +1,9 @@
 
 using UnityEngine;
+/// <summary>
+/// Attaches an audio source to a surface and dynamically adjusts its position and volume based on the listener's distance.
+/// Useful for spatial audio effects where sound should appear to come from a specific object or location.
+/// </summary>
 public class SurfaceAttachAudio : MonoBehaviour
 {
     [Tooltip("BoxCollider to the cube the sound should 'come from'")]
@@ -33,12 +37,18 @@ public class SurfaceAttachAudio : MonoBehaviour
     public float CurrentDistance { get; private set; }
 
     private AudioSource _audio;
+    /// <summary>
+    /// Initializes references to the listener, source collider, and audio source when the component is reset in the editor.
+    /// </summary>
     void Reset()
     {
         if (!listener && Camera.main) listener = Camera.main.transform;
         if (!sourceCollider) sourceCollider = GetComponentInParent<BoxCollider>();
         if (!_audio) TryGetComponent(out _audio);
     }
+    /// <summary>
+    /// Ensures references to the listener, source collider, and audio source are set up at runtime.
+    /// </summary>
     void Start()
     {
         // Try again in Start in case the hierarchy was set up afterwards
@@ -50,6 +60,10 @@ public class SurfaceAttachAudio : MonoBehaviour
         }
         if (!_audio) TryGetComponent(out _audio);
     }
+    /// <summary>
+    /// Updates the audio source position to the closest point on the collider to the listener and adjusts volume based on distance.
+    /// Handles smooth volume transitions if enabled.
+    /// </summary>
     void LateUpdate()
     {
         if (!sourceCollider || (!listener && !Camera.main)) return;

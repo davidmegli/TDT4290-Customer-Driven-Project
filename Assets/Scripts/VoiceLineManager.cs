@@ -1,6 +1,10 @@
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Manages the playback of voice lines and sound effects in response to game events.
+/// Handles sequencing and non-sequenced actions for elevator and button interactions.
+/// </summary>
 public class VoiceLineManager : MonoBehaviour
 {
     [SerializeField] private VoiceLineAction[] actionSequence;
@@ -13,12 +17,18 @@ public class VoiceLineManager : MonoBehaviour
     private AudioClip[] elevatorLevelClips;
     private AudioClip[] buttonLevelClips;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    /// <summary>
+    /// Registers the Play method to respond to PlayVoiceLine game events.
+    /// </summary>
     void Start()
     {
         GameEvents.PlayVoiceLine += Play;
     }
 
+    /// <summary>
+    /// Handles incoming voice line actions, determines if they are part of the sequence or non-sequence,
+    /// and triggers the appropriate sound playback.
+    /// </summary>
     void Play(VoiceLineAction action)
     {
         if (nonSequenceActions.Contains(action))
@@ -33,6 +43,9 @@ public class VoiceLineManager : MonoBehaviour
         index++;
     }
 
+    /// <summary>
+    /// Plays the corresponding audio clip for the given action, selecting the correct clip based on the current level.
+    /// </summary>
     void PlaySound(VoiceLineAction action)
     {
         switch (action)

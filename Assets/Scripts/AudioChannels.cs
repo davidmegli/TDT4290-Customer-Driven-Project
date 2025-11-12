@@ -1,6 +1,10 @@
 using UnityEngine;
 using System;
 
+/// <summary>
+/// Defines distinct audio output channels that can be used within the Unity project.
+/// The [Flags] attribute allows combining multiple channel values using bitwise operations.
+/// </summary>
 [Flags]
 public enum AudioChannel
 {

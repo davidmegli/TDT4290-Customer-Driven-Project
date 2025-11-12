@@ -30,6 +30,5 @@ public class FirstButton : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         rend.material.color = defaultColor;
-        Debug.Log("Button released by: " + other.gameObject.name);
     }
 }

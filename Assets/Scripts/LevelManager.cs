@@ -1,7 +1,14 @@
-using UnityEngine;
+using UnityEngine; 
 using System;
 using System.Collections;
 using System.Collections.Generic; 
+
+/// <summary>
+/// Manages level loading, transitions, and sequencing within the game.
+/// Handles instantiation of level prefabs, listens for level completion events,
+/// and coordinates interactions with other systems such as the elevator and voice router.
+/// Implements a Singleton pattern for easy global access across scenes.
+/// </summary>
 public class LevelManager : MonoBehaviour
 { 
     public static LevelManager Instance { get; private set; }
@@ -18,6 +25,10 @@ public class LevelManager : MonoBehaviour
     private GameObject currentLevelInstance;
     public static int currentLevelIndex = 0;
 
+    /// <summary>
+    /// Initializes the LevelManager singleton instance and loads all available level prefabs.
+    /// Ensures the object persists across scene loads.
+    /// </summary>
     private void Awake()
     {
         // Singleton pattern for easy global access 
@@ -31,6 +42,10 @@ public class LevelManager : MonoBehaviour
         LoadAllLevels();
     }
     
+    /// <summary>
+    /// Called when the game starts. Subscribes to level completion events,
+    /// loads the initial level, and ensures the elevator is inactive at startup.
+    /// </summary>
     private void Start()
     { 
         // Subscribe to the level-completed event 
@@ -40,16 +55,28 @@ public class LevelManager : MonoBehaviour
         // Ensure elevator is set to false after spawning in the first level 
         elevator.gameObject.SetActive(false);
     }
+
+    /// <summary>
+    /// Unsubscribes from level completion events when the LevelManager is destroyed.
+    /// </summary>
     private void OnDestroy()
     {
         OnLevelCompleted -= HandleLevelCompleted;
     }
     
+    /// <summary>
+    /// Handles logic to transition to the next level when the current one is completed.
+    /// Initiates the coroutine that manages the transition delay and voice playback.
+    /// </summary>
     private void HandleLevelCompleted()
     {
         StartCoroutine(LoadNextLevel());
     }
-    /// <summary> /// Loads all level prefabs dynamically from the Resources/Levels folder. /// </summary> 
+
+    /// <summary> 
+    /// Loads all level prefabs dynamically from the Resources/Levels folder.
+    /// Prefabs are sorted alphabetically to determine their play order.
+    /// </summary> 
     private void LoadAllLevels()
     {
         GameObject[] loadedPrefabs = Resources.LoadAll<GameObject>("Levels");
@@ -57,7 +84,11 @@ public class LevelManager : MonoBehaviour
         Array.Sort(loadedPrefabs, (a, b) => a.name.CompareTo(b.name));
         levels.AddRange(loadedPrefabs);
     }
-    /// <summary> /// Loads the level at the given index and destroys the previous one. /// </summary> 
+
+    /// <summary> 
+    /// Loads the level at the given index, destroying the previous level instance if necessary.
+    /// Updates the current level index and records the load timestamp for physics safety.
+    /// </summary> 
     private void LoadLevel(int index)
     {
         if (index < 0 || index >= levels.Count)
@@ -76,7 +107,11 @@ public class LevelManager : MonoBehaviour
         // temporarily ignore noisy collision events that happen on spawn.
         lastLoadTime = Time.time;
     }
-    /// <summary> /// Loads the next level in the list. /// </summary> 
+
+    /// <summary> 
+    /// Coroutine that handles the transition to the next level.
+    /// Waits for any active voice lines to finish playing before activating the elevator.
+    /// </summary> 
     public IEnumerator LoadNextLevel()
     {
         if (currentLevelInstance != null)
@@ -92,12 +127,20 @@ public class LevelManager : MonoBehaviour
         elevator.gameObject.SetActive(true);
     }
 
+    /// <summary>
+    /// Loads the next level in sequence immediately.
+    /// Used by the elevator or other systems to advance the game.
+    /// </summary>
     public static void StartNextLevel()
     {
         int nextIndex = currentLevelIndex + 1;
         Instance.LoadLevel(nextIndex);
     }
-    /// <summary> /// Static helper method for levels to notify completion. /// Can be called from any script inside a level. /// </summary> 
+
+    /// <summary> 
+    /// Static helper method for levels to notify completion. 
+    /// Triggers the global OnLevelCompleted event and initiates the transition sequence.
+    /// </summary> 
     public static void LevelCompleted()
     {
         OnLevelCompleted?.Invoke();

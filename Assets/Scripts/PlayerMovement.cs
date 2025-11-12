@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/// <summary>
+/// Handles player movement, supporting both manual input and automatic following of a target (e.g., camera or XR rig).
+/// Provides smooth position and rotation transitions, gravity, and fallback logic for missing targets.
+/// </summary>
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
@@ -23,12 +27,18 @@ public class PlayerMovement : MonoBehaviour
     private bool hasCapturedInitialOffset;
     private bool hasSnappedToFollowTarget;
 
+    /// <summary>
+    /// Initializes the character controller and attempts to resolve the follow target.
+    /// </summary>
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         TryResolveFollowTarget();
     }
 
+    /// <summary>
+    /// Captures the initial offset if a follow target exists, or sets a default position otherwise.
+    /// </summary>
     private void Start()
     {
         if (HasFollowTarget())
@@ -37,6 +47,9 @@ public class PlayerMovement : MonoBehaviour
             transform.position = new Vector3(0f, 1f, 0f);
     }
 
+    /// <summary>
+    /// Main update loop: switches between following a target or manual movement based on target availability.
+    /// </summary>
     private void Update()
     {
         if (!HasFollowTarget()) TryResolveFollowTarget();
@@ -71,8 +84,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks if a valid follow target is assigned.
+    /// </summary>
     private bool HasFollowTarget() => followTarget != null;
 
+    /// <summary>
+    /// Attempts to automatically find and assign a suitable follow target (camera or XR rig).
+    /// </summary>
     private void TryResolveFollowTarget()
     {
         if (followTarget != null && followTarget != transform) return;
@@ -101,6 +120,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Captures the initial offset between the player and the follow target for smooth following.
+    /// </summary>
     private void CaptureInitialOffset()
     {
         if (!autoCaptureInitialOffset || hasCapturedInitialOffset || !followTarget) return;
@@ -108,6 +130,9 @@ public class PlayerMovement : MonoBehaviour
         hasCapturedInitialOffset = true;
     }
 
+    /// <summary>
+    /// Smoothly moves and rotates the player to follow the assigned target, with optional snapping and lerping.
+    /// </summary>
     private void FollowTarget()
     {
         if (!followTarget) return;
@@ -143,6 +168,9 @@ public class PlayerMovement : MonoBehaviour
         if (snapPos) hasSnappedToFollowTarget = true;
     }
 
+    /// <summary>
+    /// Handles manual movement using input axes and applies gravity when not following a target.
+    /// </summary>
     private void HandleManualMovement()
     {
         if (controller && !controller.enabled) controller.enabled = true;
@@ -159,6 +187,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
 #if UNITY_EDITOR
+    /// <summary>
+    /// Ensures that lerp speeds are non-negative when edited in the Unity Editor.
+    /// </summary>
     private void OnValidate()
     {
         if (followPositionLerpSpeed < 0f) followPositionLerpSpeed = 0f;

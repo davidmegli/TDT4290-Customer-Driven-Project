@@ -1,6 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Manages the logic for spawning and activating the first button in the scene.
+/// Ensures the button appears only after all voice lines have finished and provides singleton access and cancellation support.
+/// </summary>
 public class SpawningFirstButtonLogic : MonoBehaviour
 {
     public static SpawningFirstButtonLogic Instance { get; private set; }
@@ -10,6 +14,9 @@ public class SpawningFirstButtonLogic : MonoBehaviour
 
     private Coroutine routine;
 
+    /// <summary>
+    /// Initializes the singleton instance and ensures the button is inactive at the start.
+    /// </summary>
     private void Awake()
     {
         // Simple (safer) singleton
@@ -25,6 +32,9 @@ public class SpawningFirstButtonLogic : MonoBehaviour
     }
 
     // Static API as delegate to the instance
+    /// <summary>
+    /// Static method to trigger loading and activation of the first button after all voice lines are finished.
+    /// </summary>
     public static void LoadFirstButton()
     {
         if (Instance == null)
@@ -38,6 +48,9 @@ public class SpawningFirstButtonLogic : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Coroutine that waits for all voice lines to finish before activating the button.
+    /// </summary>
     private IEnumerator LoadButton()
     {
         // Wait until all voice is finished, if we have router
@@ -58,6 +71,9 @@ public class SpawningFirstButtonLogic : MonoBehaviour
     }
 
     // Optional: cancel if necessary
+    /// <summary>
+    /// Cancels the button loading coroutine if it is running, allowing interruption of the activation process.
+    /// </summary>
     public void CancelLoading()
     {
         if (routine != null)

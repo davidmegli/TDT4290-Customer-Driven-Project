@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/// <summary>
+/// WallCollisionsNew handles collision detection for walls in the game.
+/// It plays audio feedback and manages game-over conditions based on proximity to the wall.
+/// </summary>
 [RequireComponent(typeof(Collider))]
 public class WallCollisionsNew : MonoBehaviour
 {
@@ -39,6 +43,11 @@ public class WallCollisionsNew : MonoBehaviour
         audioSource.reverbZoneMix = 0f;   
     }
 
+    /// <summary>
+    /// Triggered when another collider stays within the wall's trigger zone.
+    /// Checks proximity to the wall and triggers game-over conditions if necessary.
+    /// </summary>
+    /// <param name="other">The collider that is staying within the trigger zone.</param>
     private void OnTriggerStay(Collider other)
     {
         // Ignore collisions for a short grace period right after a level is instantiated.
@@ -63,12 +72,22 @@ public class WallCollisionsNew : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Triggered when another collider exits the wall's trigger zone.
+    /// Resets the latch state to allow future triggers.
+    /// </summary>
+    /// <param name="other">The collider that exited the trigger zone.</param>
     private void OnTriggerExit(Collider other)
     {
         // when we are outside, release latch 
         latched = false;
     }
 
+    /// <summary>
+    /// Checks if the given collider has a tag that matches the triggering tags.
+    /// </summary>
+    /// <param name="other">The collider to check.</param>
+    /// <returns>True if the collider's tag matches; otherwise, false.</returns>
     private bool IsPlayerTag(Collider other)
     {
         foreach (var t in triggeringTags)
@@ -76,6 +95,9 @@ public class WallCollisionsNew : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Plays the collision sound if an audio clip is assigned.
+    /// </summary>
     private void PlayCollisionSound()
     {
         if (collisionSound != null)

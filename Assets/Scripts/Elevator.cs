@@ -1,6 +1,14 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Manages elevator mechanics in the VR environment, including:
+/// - Audio playback for different elevator sounds (pling, door open/close, movement, music)
+/// - Door animation and movement
+/// - Player entry/exit detection and dwell timer
+/// - Level progression via elevator ride sequence
+/// - Integration with voice line events for contextual audio responses
+/// </summary>
 public class Elevator : MonoBehaviour
 {
     [SerializeField] private VoiceAudioRouter voiceRouter;
@@ -60,6 +68,11 @@ public class Elevator : MonoBehaviour
     private bool waitingForExitToClose = false;
     private bool gotExitSignal = false;
 
+    /// <summary>
+    /// Initializes elevator audio sources and configures 3D audio settings.
+    /// Falls back to creating or finding AudioSource components if not assigned in Inspector.
+    /// Sets the initial ride duration to the default value.
+    /// </summary>
     private void Awake()
     {
         // Ensure sources exist; don't create new ones if you want to place them manually in prefab
@@ -79,6 +92,12 @@ public class Elevator : MonoBehaviour
         currentRideDuration = defaultRideDuration;
     }
 
+    /// <summary>
+    /// Configures 3D spatial audio settings for the given AudioSource.
+    /// Enables spatial audio with maximum blend for immersive positioning,
+    /// and disables Doppler and reverb effects for cleaner sound.
+    /// </summary>
+    /// <param name="src">The AudioSource to configure with 3D audio settings.</param>
     private void Setup3DAudio(AudioSource src)
     {
         if (!src) return;
@@ -89,6 +108,11 @@ public class Elevator : MonoBehaviour
         src.reverbZoneMix = 0f;
     }
 
+    /// <summary>
+    /// Updates the door's position each frame using linear interpolation (Lerp).
+    /// When opening, moves the door to position 1.5f on the X-axis.
+    /// When closing, returns the door to position 0f.
+    /// </summary>
     private void Update()
     {
         if (!door) return;
@@ -101,6 +125,11 @@ public class Elevator : MonoBehaviour
         );
     }
 
+    /// <summary>
+    /// Called when the elevator GameObject is enabled.
+    /// Initializes elevator state, subscribes to voice line events,
+    /// and starts the activation sequence (pling sound, opening door, background music).
+    /// </summary>
     private void OnEnable()
     {
         isActive = true;
@@ -125,6 +154,10 @@ public class Elevator : MonoBehaviour
         StartCoroutine(ElevatorActivationSequence());
     }
 
+    /// <summary>
+    /// Called when the elevator GameObject is disabled.
+    /// Unsubscribes from voice line events and cleans up the exit-waiting state.
+    /// </summary>
     private void OnDisable()
     {
         // NEW: clean up subscription and state
@@ -133,6 +166,11 @@ public class Elevator : MonoBehaviour
         gotExitSignal = false;
     }
 
+    /// <summary>
+    /// Coroutine that plays the initial elevator arrival sequence.
+    /// Plays pling sound (inside and outside), starts looping elevator music (inside only),
+    /// and triggers door opening animation with sound.
+    /// </summary>
     private IEnumerator ElevatorActivationSequence()
     {
         if (!isActive) yield break;
@@ -146,6 +184,12 @@ public class Elevator : MonoBehaviour
     }
 
     // --- TRIGGER LOGIC ---
+    /// <summary>
+    /// Called when the player enters the elevator trigger zone.
+    /// Marks the player as inside the elevator and starts a dwell timer.
+    /// If the player stays for the required duration, the elevator ride begins.
+    /// Fires an EnteredElevator voice line event.
+    /// </summary>
     private void OnTriggerEnter(Collider other)
     {
         if (!isActive) return;
@@ -162,21 +206,11 @@ public class Elevator : MonoBehaviour
         GameEvents.Fire(VoiceLineAction.EnteredElevator);
     }
 
-    // private void OnTriggerExit(Collider other)
-    // {
-    //     if (!isActive) return;
-
-    //     // First valid exit after activation "arms" the elevator
-    //     armed = true;
-    //     playerIsInside = false;
-
-    //     if (dwellCoroutine != null)
-    //     {
-    //         StopCoroutine(dwellCoroutine);
-    //         dwellCoroutine = null;
-    //     }
-    // }
-
+    /// <summary>
+    /// Coroutine that waits for the player to remain inside the elevator for a required duration.
+    /// After the dwell time is complete, automatically starts the elevator ride.
+    /// Can be interrupted if the elevator becomes inactive.
+    /// </summary>
     private IEnumerator DwellThenStart()
     {
         float t = 0f;
@@ -192,9 +226,12 @@ public class Elevator : MonoBehaviour
     }
 
     /// <summary>
-    /// Call this to start ride with desired duration (seconds).
-    /// Can be called externally (e.g. from LevelVoiceController when sequence completes).
+    /// Initiates the elevator ride with the specified duration.
+    /// Can be called externally (e.g., from LevelVoiceController when a sequence completes)
+    /// to override the default ride duration.
+    /// Starts the level transition sequence including door close, movement sounds, and level loading.
     /// </summary>
+    /// <param name="durationSeconds">Duration of the elevator ride in seconds.</param>
     public void StartElevatorRide(float durationSeconds)
     {
         currentRideDuration = Mathf.Max(0f, durationSeconds);
@@ -203,6 +240,18 @@ public class Elevator : MonoBehaviour
             levelSequenceCoroutine = StartCoroutine(LoadNextLevelSequence());
     }
 
+    /// <summary>
+    /// Coroutine that orchestrates the complete elevator ride and level transition.
+    /// Sequence:
+    /// 1. Closes door with sound
+    /// 2. Plays movement/ambience sound during the ride
+    /// 3. Waits for any ongoing voice lines to finish
+    /// 4. Waits for the specified ride duration
+    /// 5. Loads the next level
+    /// 6. Opens door with arrival pling
+    /// 7. Waits for player to exit before closing door again
+    /// 8. Disables the elevator and cleans up state
+    /// </summary>
     private IEnumerator LoadNextLevelSequence()
     {
         // Close door
@@ -261,6 +310,10 @@ public class Elevator : MonoBehaviour
 
     // --- AUDIO HELPERS ---
 
+    /// <summary>
+    /// Plays the pling sound (arrival chime) on both inside and outside audio sources.
+    /// Uses the configured pling volume and master volume settings.
+    /// </summary>
     private void PlayPling()
     {
         if (!plingClip) return;
@@ -268,19 +321,31 @@ public class Elevator : MonoBehaviour
         if (outsideSource) outsideSource.PlayOneShot(plingClip, plingVolume * outsideMaster);
     }
 
+    /// <summary>
+    /// Plays the door opening sound and initiates the door opening animation.
+    /// Sets isDoorOpening flag to true, which is used in Update() for door movement.
+    /// </summary>
     private void PlayDoorOpen()
     {
         if (doorSource && doorOpenClip) doorSource.PlayOneShot(doorOpenClip, doorOpenVolume * doorMaster);
         isDoorOpening = true;
     }
 
+    /// <summary>
+    /// Plays the door closing sound and initiates the door closing animation.
+    /// Sets isDoorOpening flag to false, which causes the door to return to closed position.
+    /// </summary>
     private void PlayDoorClose()
     {
         if (doorSource && doorCloseClip) doorSource.PlayOneShot(doorCloseClip, doorCloseVolume * doorMaster);
         isDoorOpening = false;
     }
 
-    // Loops movement sound during ride (inside only)
+    /// <summary>
+    /// Plays the looping elevator movement/ambience sound on the inside audio source only.
+    /// Stops any previous audio clip and sets the movement clip to loop during the ride.
+    /// Applies elevator move volume and inside master volume settings.
+    /// </summary>
     private void PlayElevatorMove()
     {
         if (!insideSource || !elevatorMoveClip) return;
@@ -292,6 +357,10 @@ public class Elevator : MonoBehaviour
         insideSource.Play();
     }
 
+    /// <summary>
+    /// Stops the elevator movement sound loop on the inside audio source.
+    /// Safely stops only if the movement clip is currently playing to avoid interfering with other audio.
+    /// </summary>
     private void StopElevatorMove()
     {
         if (!insideSource) return;
@@ -303,7 +372,11 @@ public class Elevator : MonoBehaviour
         }
     }
 
-    // Music inside only
+    /// <summary>
+    /// Plays the looping elevator background music on the inside audio source only.
+    /// Music plays continuously while the player is inside the elevator.
+    /// Applies elevator music volume and inside master volume settings.
+    /// </summary>
     private void PlayElevatorMusic()
     {
         if (!insideSource || !elevatorMusicClip) return;
@@ -314,6 +387,10 @@ public class Elevator : MonoBehaviour
         insideSource.Play();
     }
 
+    /// <summary>
+    /// Stops the elevator background music on the inside audio source.
+    /// Safely stops only if the music clip is currently playing to avoid interfering with other audio.
+    /// </summary>
     private void StopElevatorMusic()
     {
         if (!insideSource) return;
@@ -330,10 +407,15 @@ public class Elevator : MonoBehaviour
         }
     }
 
-    // --- NEW: event handler for ExitElevator (from ExitZone) ---
+    /// <summary>
+    /// Event handler for voice line actions broadcasted via GameEvents.
+    /// Specifically listens for ExitElevator action during the post-arrival waiting phase.
+    /// When the player exits the elevator after arrival, this signals the elevator to close the door
+    /// and complete its sequence.
+    /// </summary>
+    /// <param name="action">The voice line action that was fired.</param>
     private void OnVoiceLineAction(VoiceLineAction action)
     {
-        Debug.Log(action);
         if (!waitingForExitToClose) return;                 // only relevant after arrival
         if (action != VoiceLineAction.ExitElevator) return; // only this action
         gotExitSignal = true;                                // signal to coroutine (FIXED)
