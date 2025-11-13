@@ -47,11 +47,9 @@ Assets/
 ├── Resources/              # Runtime loadable assets
 │   └── Levels/             # Level prefabs (Level 1-6)
 ├── Scripts/                # Core application scripts
-│   ├── Audio/              # Audio-related systems
-│   ├── Core/               # Core game mechanics
-│   ├── UI/                 # User interface
-│   ├── VR/                 # VR-specific functionality
-│   └── Levels/             # Level management
+│   ├── Audio-related scripts
+│   ├── Core game mechanics scripts
+│   └── Level management scripts
 ├── Skyboxes/               # Environment skybox materials
 ├── UI/                     # User interface assets
 └── VFX/                    # Visual effects
